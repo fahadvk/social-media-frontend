@@ -1,0 +1,7 @@
+.ProfileSide {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-direction: column;
+  overflow: auto;
+}
