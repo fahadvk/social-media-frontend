@@ -1,14 +1,14 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import Cookies from 'universal-cookie'
-function PublicRoutes({ childern }) {
-    const Navigate = useNavigate()
+function PublicRoutes({ children }) {
+    // const Navigate = useNavigate()
     const cookie = new Cookies()
     if (cookie.get('token')) {
-        return Navigate("/")
+        return <Navigate to='/' />
     }
     else {
-        return childern;
+        return children;
     }
 }
 

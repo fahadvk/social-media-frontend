@@ -9,7 +9,7 @@ function Routing(props) {
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<PrivateRoutes> <HomePage /> </PrivateRoutes>} exact />
+        <Route path='/' element={<PrivateRoutes> <HomePage/> </PrivateRoutes>} exact />
         <Route path='/login' element={<PublicRoutes> <LoginPage />  </PublicRoutes>}></Route>
         <Route path='/signup' element={<PublicRoutes> <SignUpPage /></PublicRoutes>}></Route>
       </Routes >

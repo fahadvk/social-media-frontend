@@ -29,10 +29,6 @@ const Signup = ({ onFormSwitch }) => {
             .min(6, 'Must be  minimum 6 characters ')
             .required('Required')
             .oneOf([Yup.ref('password')], 'Passwords must be same')
-        // .test("password must be equal", "Password must be equal", (value) => value === Yup.ref('password'))
-
-
-
     })
     const formik = useFormik({
         initialValues: { name: '', email: '', mobile: '', password: '', confirmPassword: '' }

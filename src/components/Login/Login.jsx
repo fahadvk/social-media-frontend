@@ -23,6 +23,7 @@ const Login = () => {
             cookie.set('token', response.data.token)
             dispatch(setName(response.data.name))
             dispatch(setAuth(true))
+            Navigate("/")
         }
     }
     const paperstyle = { padding: 20, height: '60vh', width: 400, margin: '100px auto', "background-color": "" }
