@@ -1,23 +1,42 @@
 
 
 import React, { useEffect } from 'react';
+import Feed from './Feed/Feed';
 import './index.css'
+import Navbar from './Navbar/Navbar';
+import LeftSidebar from './Navbar/SideBar/LeftSideBar';
+import RightSidebar from './Navbar/SideBar/Sidebar';
 import ProfileSide from './ProfileSide/ProfileSide';
-import {verifyuser} from '../../apiRequests/authapis'
+import { Flex, Spacer } from '@chakra-ui/react'
+// import Button from './Navbar/SideBar/button';
+
 
 function Home(props) {
-    
-// useEffect(()=>{
-//    verifyuser()
-
-// },[])
 
     return (
-        <div className='Home'>
-            <ProfileSide />
-            <div className='postside'>post12skksk</div>
-            <div className='profile side'>okbye </div>
-        </div>
+        <>
+
+            <div className="nav">
+                <Navbar />
+            </div>
+            <div className="Home">
+                <Flex gap="2rem" justifyContent="space-between">
+
+                    <div className="RightSidebar">
+                        <RightSidebar />
+                    </div>
+                    {/* <Feed /> */}
+                    <div>
+                        {/* <Button></Button> */}
+                        <h2> korach oombiya posts</h2>
+                    </div>
+                    <LeftSidebar />
+                    {/* <ProfileSide />  */}
+                </Flex>
+
+                {/* <div className='profile side'>okbye </div> */}
+            </div>
+        </>
     );
 }
 

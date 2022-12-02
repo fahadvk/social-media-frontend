@@ -1,5 +1,6 @@
 
-import { Paper } from '@mui/material';
+// import { Paper } from '@mui/material';
+import Paper from '@material-ui/core/Paper';
 import { registerapi } from '../../apiRequests/authapis';
 
 import { useFormik, yupToFormErrors } from 'formik';
@@ -10,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 const Signup = ({ onFormSwitch }) => {
 
     const Navigate = useNavigate()
-    const paperstyle = { padding: 20, height: '150h', width: 450, margin: '100px auto', }
+    const paperstyle = { padding: 20, height: '150h', width: 450, margin: '100px auto' }
 
     const validationSchema = Yup.object({
         name: Yup.string()
@@ -55,14 +56,10 @@ const Signup = ({ onFormSwitch }) => {
 
     // }
     return (
-        <div className='auth-form-container Login'>
-            <Paper elevation={5} style={paperstyle} >
+        <div className='auth-form-container signup'>
+            <Paper elevation={5} style={paperstyle}  >
                 <h2 className=" head text-3xl font-bold font-mono"> Register</h2>
-
-
-
                 <>
-
                     <form className='signup-form' onSubmit={formik.handleSubmit}>
 
                         <input size='25' type='text' placeholder='FullName' id='name' value={formik.values.name} name='name' onChange={formik.handleChange}
