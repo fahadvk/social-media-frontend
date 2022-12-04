@@ -4,11 +4,13 @@ import React, { useEffect } from 'react';
 import Feed from './Feed/Feed';
 import './index.css'
 import Navbar from './Navbar/Navbar';
-import LeftSidebar from './Navbar/SideBar/LeftSideBar';
-import RightSidebar from './Navbar/SideBar/Sidebar';
+import LeftSidebar from './SideBar/LeftSideBar';
+import RightSidebar from './SideBar/Sidebar';
 import ProfileSide from './ProfileSide/ProfileSide';
 import { Flex, Spacer } from '@chakra-ui/react'
+import Posts from './Posts/Posts';
 // import Button from './Navbar/SideBar/button';
+
 
 
 function Home(props) {
@@ -20,17 +22,19 @@ function Home(props) {
                 <Navbar />
             </div>
             <div className="Home">
-                <Flex gap="2rem" justifyContent="space-between">
+                <Flex justifyContent="space-between" gap='0' marginTop='0' >
 
                     <div className="RightSidebar">
                         <RightSidebar />
                     </div>
                     {/* <Feed /> */}
-                    <div>
-                        {/* <Button></Button> */}
-                        <h2> korach oombiya posts</h2>
+                    <div className='Posts'>
+                        <Posts />
                     </div>
-                    <LeftSidebar />
+                    <div className='LeftSideNav'>
+
+                        <LeftSidebar />
+                    </div>
                     {/* <ProfileSide />  */}
                 </Flex>
 

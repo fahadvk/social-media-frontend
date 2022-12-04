@@ -38,6 +38,7 @@ import {
     PopoverCloseButton,
     PopoverAnchor,
 } from "@chakra-ui/react";
+import TransitionExample from "../../Create/CreateModal";
 
 
 const Navbar = () => {
@@ -45,7 +46,7 @@ const Navbar = () => {
     const navigate = useNavigate();
     const [search, setSearch] = useState("");
     const [isMobile] = useMediaQuery("(max-width: 768px)");
-   
+
     const toast = useToast();
     const logout = () => {
         signOut(auth)
@@ -78,7 +79,7 @@ const Navbar = () => {
                     size={isMobile ? "sm" : "xl"}
                     fontFamily="Sansita Swashed"
                 >
-                   Yoyo
+                    Yoyo
                 </Heading>
             </Flex>
             <form
@@ -152,6 +153,7 @@ const Navbar = () => {
                     onClick={() => {
                         navigate("/create");
                     }}
+
                 >
                     Create
                 </Button>

@@ -1,17 +1,17 @@
 
-// import { Paper } from '@mui/material';
-import Paper from '@material-ui/core/Paper';
+
 import { registerapi } from '../../apiRequests/authapis';
 
 import { useFormik, yupToFormErrors } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
+import { Input, Button, Heading } from '@chakra-ui/react';
 
 
 const Signup = ({ onFormSwitch }) => {
 
     const Navigate = useNavigate()
-    const paperstyle = { padding: 20, height: '150h', width: 450, margin: '100px auto' }
+
 
     const validationSchema = Yup.object({
         name: Yup.string()
@@ -56,47 +56,56 @@ const Signup = ({ onFormSwitch }) => {
 
     // }
     return (
-        <div className='auth-form-container signup'>
-            <Paper elevation={5} style={paperstyle}  >
-                <h2 className=" head text-3xl font-bold font-mono"> Register</h2>
+        <div className='bg-gray-600 flex flex-col justify-center w-full h-screen'>
+            <div className='max-w-[450px] w-full mx-auto bg-gray-800 p-8 px-8 rounded-lg'>
+                <h2 className="text-white text-center text-3xl font-bold "> Register</h2>
                 <>
-                    <form className='signup-form' onSubmit={formik.handleSubmit}>
+                    <form onSubmit={formik.handleSubmit}>
+                        <div className="flex flex-col text-gray-400 py-2 mt-3" >
 
-                        <input size='25' type='text' placeholder='FullName' id='name' value={formik.values.name} name='name' onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                        />
-                        <label for='name' >  {formik.errors.name && formik.touched.name && formik.errors.name}   </label>
+                            <input className='rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none' type='text' placeholder='FullName' id='name' value={formik.values.name} name='name' onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}></input>
+                            <label className='text-red-600' for='name' >  {formik.errors.name && formik.touched.name && formik.errors.name}   </label>
+                        </div>
+                        <div className="flex flex-col text-gray-400 py-2 mt-3" >
 
-                        <input size='25' type='email' placeholder='youremail@gmail.com' id='email' name='email' onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.email}
-                        />
-                        <label for='email' >  {formik.errors.email && formik.touched.email && formik.errors.email}   </label>
+                            <input size='25' type='email' placeholder='youremail@gmail.com' id='email' name='email' onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.email} className='rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none' ></input>
+                            <label className='text-red-600' for='email' >  {formik.errors.email && formik.touched.email && formik.errors.email}   </label>
+                        </div>
+                        <div className="flex flex-col text-gray-400 py-2 mt-3" >
 
-                        <input size='25' type='tel' placeholder='Mobile' id='mobile' name='mobile' onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.mobile}
-                        />
+                            <input type='tel' placeholder='Mobile' id='mobile' name='mobile' onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.mobile} aria-invalid={formik.errors.mobile && formik.touched.mobile && formik.errors.mobile} className='rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none' ></input>
+                            <label className='text-red-600' for='mobile' >  {formik.errors.mobile && formik.touched.mobile && formik.errors.mobile}   </label>
+                        </div>
+                        <div className="flex flex-col text-gray-400 py-2 mt-3" >
 
-                        <label for='mobile' >  {formik.errors.mobile && formik.touched.mobile && formik.errors.mobile}   </label>
+                            <input type='Password' placeholder='Enter your Password' id='password' name='password' onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.password} className='rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none' ></input>
+                            <label className='text-red-600' for='Password' >  {formik.errors.password && formik.touched.password && formik.errors.password}   </label>
+                        </div>
 
-                        <input size='25' type='Password' placeholder='Enter your Password' id='password' name='password' onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.password} />
-                        <label for='Password' >  {formik.errors.password && formik.touched.password && formik.errors.password}   </label>
 
-                        <input size='25' type='Password' placeholder='Repeat your Password ' id='confirmpassword' name='confirmPassword'
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.confirmPassword} />
-                        <label for='confirmpassword' >  {formik.errors.confirmPassword && formik.touched.confirmPassword && formik.errors.confirmPassword}   </label>
-                        <button className='signup-btn' type='submit' disabled={formik.isSubmitting} > Register</button>
+                        <div className="flex flex-col text-gray-400 py-2 mt-3" >
+
+                            <input type='Password' placeholder='Repeat your Password ' id='confirmpassword' name='confirmPassword'
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.confirmPassword} className='rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none' ></input>
+                            <label className='text-red-600' for='confirmpassword' >  {formik.errors.confirmPassword && formik.touched.confirmPassword && formik.errors.confirmPassword}   </label>
+                        </div>
+                        <button className="w-full my-5 py-3 bg-gray-500" type='submit log' disabled={formik.isSubmitting} > Register</button>
                     </form>
 
-                    <button className='link-btn' onClick={() => { Navigate("/login") }} type="button"> Already  have an account ? Login</button>
+                    <button className="w-full text-center text-gray-400 py-2" onClick={() => { Navigate("/login") }} type="button"> Already  have an account ? Login</button>
                 </>
-            </Paper>
-        </div >
+            </div>
+        </div>
+
 
     )
 
