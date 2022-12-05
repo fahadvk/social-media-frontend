@@ -13,9 +13,9 @@ function App() {
     <Provider store={Store}>
       <ChakraProvider>
         <CookiesProvider>
-          <div className="App">
+          {/* <div className="App"> */}
             <Routing />
-          </div>
+          {/* </div> */}
         </CookiesProvider>
       </ChakraProvider>
     </Provider>

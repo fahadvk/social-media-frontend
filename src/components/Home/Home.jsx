@@ -25,6 +25,7 @@ function Home(props) {
                 <Flex justifyContent="space-between" gap='0' marginTop='0' >
 
                     <div className="RightSidebar">
+                        {/* <ProfileSide/> */}
                         <RightSidebar />
                     </div>
                     {/* <Feed /> */}

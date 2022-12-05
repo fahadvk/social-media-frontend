@@ -38,7 +38,7 @@ import {
     PopoverCloseButton,
     PopoverAnchor,
 } from "@chakra-ui/react";
-import TransitionExample from "../../Create/CreateModal";
+
 
 
 const Navbar = () => {
@@ -79,7 +79,8 @@ const Navbar = () => {
                     size={isMobile ? "sm" : "xl"}
                     fontFamily="Sansita Swashed"
                 >
-                    Yoyo
+
+                    Socisy
                 </Heading>
             </Flex>
             <form
@@ -89,7 +90,7 @@ const Navbar = () => {
                     navigate("/search/" + search);
                 }}
             >
-                <Tooltip label="Search shit" openDelay={400}>
+                <Tooltip label="Search " openDelay={400}>
                     <InputGroup mx={isMobile ? 2 : 8} width={isMobile ? "40vw" : "50vw"}>
                         <InputLeftElement
                             pointerEvents="none"
@@ -98,7 +99,7 @@ const Navbar = () => {
                         />
                         <Input
                             type="text"
-                            placeholder="Search shit ..."
+                            placeholder="Search  ..."
                             variant="filled"
                             onChange={(e) => {
                                 setSearch(e.target.value);
@@ -138,7 +139,7 @@ const Navbar = () => {
                     <PopoverCloseButton />
                     <PopoverHeader>Notifications!</PopoverHeader>
                     <PopoverBody>
-                        You have no new notifications  so sad !
+                        You have no new notifications  !
                     </PopoverBody>
                 </PopoverContent>
             </Popover>
