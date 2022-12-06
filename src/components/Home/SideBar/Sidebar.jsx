@@ -24,7 +24,7 @@ const RightSidebar = () => {
       height="max-content"
       flexDirection="column"
     >
-      <Tooltip openDelay={300}>
+      {/* <Tooltip openDelay={300}>
         <Flex
           className="profilestuff"
           cursor="pointer"
@@ -45,11 +45,11 @@ const RightSidebar = () => {
             <Text>@user</Text>
           </Flex>
         </Flex>
-      </Tooltip>
+      </Tooltip> */}
       <Flex
         borderRadius="1rem"
         boxShadow="0 3px 10px rgb(0 0 0 / 0.2)"
-        marginTop="2rem"
+        // marginTop="2rem"
         width="100%"
         flexDirection="column"
       >

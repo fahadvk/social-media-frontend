@@ -26,7 +26,7 @@ function Loginnew(props) {
         } else {
 
             const response = await loginapi({ email: emailRef.current.value, password: passwordRef.current.value })
-            if (response.data.name) {
+            if (response.data?.name) {
                 setCookie('token', response.data.token, { path: '/' });
                 let cookie = new Cookies()
                 cookie.set('token', response.data.token)

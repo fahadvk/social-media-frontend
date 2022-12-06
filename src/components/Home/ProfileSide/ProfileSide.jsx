@@ -5,7 +5,7 @@ import ProfileCard from '../ProfileCard/ProfileCard';
 function ProfileSide(props) {
     return (
         <div className='profileSide'>
-            <LogoSearch/>
+            {/* <LogoSearch/> */}
             <ProfileCard/>
         </div>
     );

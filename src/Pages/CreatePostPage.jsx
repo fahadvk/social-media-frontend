@@ -5,7 +5,7 @@ import RightSidebar from "../components/Home/SideBar/Sidebar";
 import LeftSidebar from "../components/Home/SideBar/LeftSideBar";
 import CreateComponent from "../components/Create/CreatePost";
 
-const Create = () => {
+function Create() {
   useEffect(() => {
     document.title = " Create post";
   }, []);
@@ -24,6 +24,6 @@ const Create = () => {
       </Grid>
     </div>
   );
-};
+}
 
 export default Create;

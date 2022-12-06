@@ -79,19 +79,13 @@ const CreateComponent = () => {
                     }}
                     value={caption}
                 />
-                {caption.length >= 5 && caption.length <= 100 ? (
-                    ""
-                ) : (
-                    <Heading as="h4" size="sm" color="gray.500">
-                        Caption must be between 5 to 100 letters
-                    </Heading>
-                )}
+             
             </Flex>
             <BsImageFill onClick={openWidget} className="self-center" />
             <button className="self-center " onClick={openWidget}>upload a image</button>
 
             <Image id="uploadedimage" />
-            {caption.length >= 5 && caption.length <= 100 ? (
+           
                 <Button onClick={submitPost}
                     colorScheme="purple"
                     marginBottom="1rem"
@@ -101,11 +95,6 @@ const CreateComponent = () => {
                 >
                     Create post
                 </Button>
-            ) : (
-                <Button disabled colorScheme="purple" marginBottom="1rem" >
-                    Create post
-                </Button>
-            )}
         </Flex>
     );
 };
