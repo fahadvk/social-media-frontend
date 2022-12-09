@@ -1,9 +1,7 @@
-import Signup from "../components/Login/Signup"
+/* eslint-disable react/react-in-jsx-scope */
+import Signup from "../components/Signup/Signup"; 
 
-
-const SignUpPage = () => {
-
-    return (<Signup></Signup>)
-
+function SignUpPage(){
+  return <Signup />;
 }
-export default SignUpPage
+export default SignUpPage;

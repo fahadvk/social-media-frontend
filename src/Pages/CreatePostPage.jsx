@@ -1,7 +1,6 @@
 import { Grid } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import Navbar from "../components/Home/Navbar/Navbar";
-import RightSidebar from "../components/Home/SideBar/Sidebar";
 import LeftSidebar from "../components/Home/SideBar/LeftSideBar";
 import CreateComponent from "../components/Create/CreatePost";
 

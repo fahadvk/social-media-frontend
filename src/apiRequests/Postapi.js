@@ -17,13 +17,28 @@ export const fetchAll = async () => {
   try {
     return await instance.get("/allPosts");
   } catch (error) {
-    return console.log(error);
+    return console.error(error);
   }
 };
 export const addLike = async (postid) => {
   try {
-    return await instance.patch("/addLike",{postid});
+    return await instance.patch("/addLike", { postid });
   } catch (error) {
     return error;
   }
 };
+
+export const createComment = async (data) => {
+  try {
+    return await instance.post("/addcomment", { data });
+  } catch (error) {
+    console.log(error);
+  }
+};
+ export const fecthCommentbypost = async (id) =>{
+  try {
+    return await instance.get(`/fetchCommentByPost/${id}`)
+  } catch (error) {
+    
+  }
+ }
