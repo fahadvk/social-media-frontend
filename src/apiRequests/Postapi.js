@@ -32,13 +32,28 @@ export const createComment = async (data) => {
   try {
     return await instance.post("/addcomment", { data });
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };
- export const fecthCommentbypost = async (id) =>{
+export const fecthCommentbypost = async (id) => {
   try {
-    return await instance.get(`/fetchCommentByPost/${id}`)
+    return await instance.get(`/fetchCommentByPost/${id}`);
   } catch (error) {
-    
+    return error;
   }
- }
+};
+export const fetchUserPosts = async () => {
+  try {
+    return await instance.get("/fetchUserPosts");
+  } catch (error) {
+    return error;
+  }
+};
+
+export const DeletePost = async (id) => {
+  try {
+    return await instance.delete(`/deletePost/${id}`);
+  } catch (error) {
+    return error;
+  }
+};

@@ -29,7 +29,39 @@ export const verifyuser = async () => {
     return error;
   }
 };
+export const fetchUserDetails = async () => {
+  try {
+    return await instance.get("/getUserInfo");
+  } catch (error) {
+    return error;
+  }
+};
+export const updateProfile = async (file) => {
+  try {
+    return await instance.patch("/editProfilePicture", { imgurl: file });
+  } catch (error) {
+    return error;
+  }
+};
+export const updateCoverImage = async (file) => {
+  try {
+    return await instance.patch("/editCoverPicture", { imgurl: file });
+  } catch (error) {
+    return error;
+  }
+};
 
-// export const emailCheck = async (email) => {
-//   return await instance.get(`/emailexist/${email}`)
-// }
+export const verifyPassword = async (password) => {
+  try {
+    return await instance.patch("/verifyPassword", { password });
+  } catch (error) {
+    return error;
+  }
+};
+export const setNewPassword = async (password) => {
+  try {
+    return await instance.patch("/changePassword", { password });
+  } catch (error) {
+    return undefined
+  }
+};

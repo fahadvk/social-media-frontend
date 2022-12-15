@@ -1,10 +1,10 @@
 
 import './App.css'
-import Routing from './Routes/Routers'
-import Store from './store/index'
-import { ChakraProvider } from "@chakra-ui/react";
 import { Provider } from 'react-redux'
 import { CookiesProvider } from "react-cookie";
+import { ChakraProvider } from "@chakra-ui/react";
+import Routing from './Routes/Routers'
+import Store from './store/index'
 
 function App() {
 
@@ -13,9 +13,7 @@ function App() {
     <Provider store={Store}>
       <ChakraProvider>
         <CookiesProvider>
-          {/* <div className="App"> */}
             <Routing />
-          {/* </div> */}
         </CookiesProvider>
       </ChakraProvider>
     </Provider>

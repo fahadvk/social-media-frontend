@@ -1,15 +1,14 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import LoginPage from "../Pages/LoginPage";
 import SignUpPage from "../Pages/SignupPage";
 import HomePage from "../Pages/HomePage";
 import PrivateRoutes from "./PrivateRoutes";
 import PublicRoutes from "./PublicRoutes";
-import Create from "../Pages/CreatePostPage";
-import Loginnew from "../components/Login/Login";
+import Login from "../components/Login/Login";
 import ProfilePage from "../Pages/ProfilePage";
+import SettingsPage from "../Pages/SettingsPage";
 
-function Routing(props) {
+function Routing() {
   return (
     <Router>
       <Routes>
@@ -28,7 +27,7 @@ function Routing(props) {
           element={
             <PublicRoutes>
               {" "}
-              <Loginnew />{" "}
+              <Login />{" "}
             </PublicRoutes>
           }
         />
@@ -41,15 +40,24 @@ function Routing(props) {
             </PublicRoutes>
           }
         />
+
         <Route
-          path="/create"
+          path="/profile"
           element={
             <PrivateRoutes>
-              <Create />
+              {" "}
+              <ProfilePage />
             </PrivateRoutes>
           }
         />
-        <Route path="/profile" element={<ProfilePage />} />
+        <Route
+          path="/settings"
+          element={
+            <PrivateRoutes>
+              <SettingsPage />
+            </PrivateRoutes>
+          }
+        />
       </Routes>
     </Router>
   );

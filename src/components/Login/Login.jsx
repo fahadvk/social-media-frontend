@@ -1,28 +1,28 @@
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 import { useCookies } from "react-cookie";
-import { useSelector, useDispatch } from "react-redux";
+import {  useDispatch } from "react-redux";
 import { setAuth, setName } from "../../store/authSlice";
 import { loginapi } from "../../apiRequests/authapis";
 
-function Login(props) {
-  const [show, setShow] = useState(false);
+function Login() {
+  const [show] = useState(false);
   const Navigate = useNavigate();
   const dispatch = useDispatch();
-  const [error, setError] = useState(false);
-  const [cookies, setCookie] = useCookies("token");
+  const [, setError] = useState(false);
+  const [ ,setCookie] = useCookies("token");
   const emailRef = useRef("");
-  const handleClick = () => setShow(!show);
+  // const handleClick = () => setShow(!show);
   const passwordRef = useRef("");
   const handleSubmit = async (e) => {
     e.preventDefault();
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
-    console.log(email, password);
     if (email === "" || password === "") {
       setError(true);
-      alert(error);
     } else {
       const response = await loginapi({
         email: emailRef.current.value,
@@ -32,7 +32,6 @@ function Login(props) {
         setCookie("token", response.data.token, { path: "/" });
         const cookie = new Cookies();
         cookie.set("token", response.data.token, { httpOnly: true });
-        console.log(cookies.token);
         dispatch(setName(response.data.name));
         dispatch(setAuth(true));
         Navigate("/");
@@ -48,7 +47,7 @@ function Login(props) {
             Signin
           </h2>
           <div className="flex flex-col text-gray-400 py-2 mt-3">
-            <label> UserName</label>
+            <label htmlFor="email"> UserName</label>
             <input
               ref={emailRef}
               name="email"
@@ -62,7 +61,7 @@ function Login(props) {
             <label> Password</label>
             <input
               className=" rounded-lg  bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
-              isInvalid={false}
+              // isInvalid={false}
               ref={passwordRef}
               name="Password"
               type={show ? "text" : "password"}
@@ -81,7 +80,7 @@ function Login(props) {
             Signin
           </button>
         </form>
-        <button className="text-gray-400 py-2 text-center ">
+        <button type="button" className="text-gray-400 py-2 text-center ">
           forgot password
         </button>
         {/* <div className='flex justify-between text-gray-400 py-2'> */}
@@ -92,7 +91,6 @@ function Login(props) {
           }}
           type="submit"
         >
-          {" "}
           Don't have an account ? Register
         </button>
         {/* </div> */}

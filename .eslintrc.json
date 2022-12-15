@@ -23,7 +23,7 @@
     ],
     "rules": {
         "react/react-in-jsx-scope": "off",
-        "prettier/prettier": "error",
+        "prettier/prettier": "off",
         "no-unused-expressions":"off"
         
         
