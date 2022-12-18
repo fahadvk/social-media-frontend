@@ -26,8 +26,8 @@ function Routing() {
           path="/login"
           element={
             <PublicRoutes>
-              {" "}
-              <Login />{" "}
+             
+              <Login />
             </PublicRoutes>
           }
         />
@@ -35,17 +35,15 @@ function Routing() {
           path="/signup"
           element={
             <PublicRoutes>
-              {" "}
               <SignUpPage />
             </PublicRoutes>
           }
         />
 
         <Route
-          path="/profile"
+          path="/profile/:id"
           element={
             <PrivateRoutes>
-              {" "}
               <ProfilePage />
             </PrivateRoutes>
           }

@@ -4,8 +4,10 @@ import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 import { useCookies } from "react-cookie";
-import {  useDispatch } from "react-redux";
-import { setAuth, setName } from "../../store/authSlice";
+import { useToast } from "@chakra-ui/react";
+import { Input } from "@mantine/core";
+import { useDispatch } from "react-redux";
+import { setAuth, setName,setUserId } from "../../store/authSlice";
 import { loginapi } from "../../apiRequests/authapis";
 
 function Login() {
@@ -13,7 +15,8 @@ function Login() {
   const Navigate = useNavigate();
   const dispatch = useDispatch();
   const [, setError] = useState(false);
-  const [ ,setCookie] = useCookies("token");
+  const [, setCookie] = useCookies("token");
+  const toast = useToast();
   const emailRef = useRef("");
   // const handleClick = () => setShow(!show);
   const passwordRef = useRef("");
@@ -28,39 +31,56 @@ function Login() {
         email: emailRef.current.value,
         password: passwordRef.current.value,
       });
+
       if (response.data?.name) {
         setCookie("token", response.data.token, { path: "/" });
         const cookie = new Cookies();
         cookie.set("token", response.data.token, { httpOnly: true });
         dispatch(setName(response.data.name));
         dispatch(setAuth(true));
+        // eslint-disable-next-line no-underscore-dangle
+        dispatch(setUserId(response.data?._id))
         Navigate("/");
+      } else if (response.response.data.failed) {
+        toast({
+          status: "error",
+          title: "failed",
+          description: response.response.data.message,
+        });
+      } else {
+        toast({
+          status: "error",
+          title: "failed",
+          description: "failed to authenticate",
+        });
       }
     }
   };
   return (
-    <div className="bg-gray-600 flex flex-col justify-center w-full h-screen">
-      <div className="max-w-[400px] w-full mx-auto bg-gray-800 p-8 px-8 rounded-lg">
+    <div className="bg-gradient-to-r from-navy via-blue to-login flex flex-col justify-center w-full h-screen">
+      <div className="max-w-[400px] w-full mx-auto bg-white  p-8 px-8 rounded-lg">
         <form onSubmit={handleSubmit}>
-          <h2 className=" text-white dark:text-white font-bold text-center text-3xl ">
-            {" "}
+          <h2 className=" text-blue dark:text-white font-bold text-center text-3xl ">
+    
             Signin
           </h2>
           <div className="flex flex-col text-gray-400 py-2 mt-3">
             <label htmlFor="email"> UserName</label>
-            <input
+            <Input
+              size="md"
               ref={emailRef}
               name="email"
               placeholder="email"
-              className="rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
+              className="rounded-lg bg-gray-700 mt-2  focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
             />
           </div>
-          <div className="flex flex-col   text-gray-400 py-2">
+          <div className="flex flex-col   text-gray-400 ">
             {/* <InputGroup > */}
             {/* <div className="relative "> */}
             <label> Password</label>
-            <input
-              className=" rounded-lg  bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
+            <Input
+              size="md"
+              className=" rounded-lg  bg-gray-700 mt-2  focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
               // isInvalid={false}
               ref={passwordRef}
               name="Password"
@@ -73,10 +93,7 @@ function Login() {
             {/* </div> */}
           </div>
 
-          <button
-            type="submit"
-            className="w-full my-3 py-3 bg-gray-500 rounded-xl"
-          >
+          <button type="submit" className="w-full my-3 py-3 bg-blue rounded-xl">
             Signin
           </button>
         </form>

@@ -2,8 +2,9 @@
 import React from "react";
 import {  useMediaQuery } from "@chakra-ui/react";
 import "./Home.css";
-import Posts from "../Feed/Posts/Posts";
+import Posts from "../Posts/Posts";
 import NavigationCard from "../Common/RightSideBar/RightSideBar";
+import LeftSidebar from "../Common/LeftSideBar/LeftSideBar";
 
 // import Button from './Navbar/SideBar/button';
 
@@ -11,11 +12,10 @@ function Home() {
   const [isMobile] = useMediaQuery("(min-width: 1196px)");
   return (
     
-      <div className="Home w-screen flex ">
+      <div className="Home w-screen  flex ">
         {isMobile && (
-          <div className="RightSideBar   invisible   lg:visible">
+          <div className="RightSideBar  invisible   lg:visible">
             <NavigationCard />
-            {/* <Side /> */}
           </div>
         )}
         {/* <Feed /> */}
@@ -23,7 +23,7 @@ function Home() {
           <Posts />
         </div>
         <div className="LeftSideNav mr-12 invisible  lg:visible ">
-          {/* <LeftSidebar />  */}
+          <LeftSidebar /> 
           {/* <Sidebar /> */}
         </div>
         {/* <ProfileSide />  */}

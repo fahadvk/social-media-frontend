@@ -42,9 +42,9 @@ export const fecthCommentbypost = async (id) => {
     return error;
   }
 };
-export const fetchUserPosts = async () => {
+export const fetchUserPosts = async (id) => {
   try {
-    return await instance.get("/fetchUserPosts");
+    return await instance.get(`/fetchUserPosts/${id}`);
   } catch (error) {
     return error;
   }
@@ -57,3 +57,10 @@ export const DeletePost = async (id) => {
     return error;
   }
 };
+ export const HidePost = async (id) =>{
+  try {
+    return await instance.patch(`/hidePost/${id}`)
+  } catch (error) {
+    return error
+  }
+ }

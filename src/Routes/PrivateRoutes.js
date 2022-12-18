@@ -1,11 +1,12 @@
-import React, { Children, useEffect } from "react";
+/* eslint-disable no-use-before-define */
+import  {  useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Cookies from "universal-cookie";
 import { verifyuser } from "../apiRequests/authapis";
-import { setAuth, setName } from "../store/authSlice";
+import { setAuth, setName,setUserId } from "../store/authSlice";
 
-function PrivateRoute({ children, page }) {
+function PrivateRoute({ children }) {
   const cookie = new Cookies();
   const token = cookie.get("token");
   const Navigate = useNavigate();
@@ -15,6 +16,7 @@ function PrivateRoute({ children, page }) {
     check();
   }, [auth]);
   if (auth) return children;
+  // eslint-disable-next-line consistent-return
   async function check() {
     if (!token) {
       return Navigate("/login");
@@ -28,6 +30,8 @@ function PrivateRoute({ children, page }) {
       if (res.data.id) {
         dispatch(setAuth(true));
         dispatch(setName(res.data.name));
+        // eslint-disable-next-line no-underscore-dangle
+        dispatch(setUserId(res.data.id))
       } else {
         cookie.remove("token");
         return Navigate("/login");

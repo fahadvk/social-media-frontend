@@ -29,9 +29,9 @@ export const verifyuser = async () => {
     return error;
   }
 };
-export const fetchUserDetails = async () => {
+export const fetchUserDetails = async (id) => {
   try {
-    return await instance.get("/getUserInfo");
+    return await instance.get(`/getUserInfo/${id}`);
   } catch (error) {
     return error;
   }
@@ -45,6 +45,7 @@ export const updateProfile = async (file) => {
 };
 export const updateCoverImage = async (file) => {
   try {
+    axios.post('/')
     return await instance.patch("/editCoverPicture", { imgurl: file });
   } catch (error) {
     return error;
@@ -62,6 +63,21 @@ export const setNewPassword = async (password) => {
   try {
     return await instance.patch("/changePassword", { password });
   } catch (error) {
-    return undefined
+    return undefined;
   }
 };
+export const updateUserInfo = async (data) => {
+  try {
+    return await instance.put("/updateUserInfo", {data});
+  } catch (error) {
+    return error;
+  }
+};
+ 
+export const deleteUserAccount = async () =>{
+  try {
+    return await instance.delete('/user')
+  } catch (error) {
+    return error
+  }
+}
