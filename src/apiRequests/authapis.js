@@ -45,7 +45,6 @@ export const updateProfile = async (file) => {
 };
 export const updateCoverImage = async (file) => {
   try {
-    axios.post('/')
     return await instance.patch("/editCoverPicture", { imgurl: file });
   } catch (error) {
     return error;
@@ -68,16 +67,63 @@ export const setNewPassword = async (password) => {
 };
 export const updateUserInfo = async (data) => {
   try {
-    return await instance.put("/updateUserInfo", {data});
+    return await instance.put("/updateUserInfo", { data });
   } catch (error) {
     return error;
   }
 };
- 
-export const deleteUserAccount = async () =>{
+
+export const deleteUserAccount = async () => {
   try {
-    return await instance.delete('/user')
+    return await instance.delete("/user");
   } catch (error) {
-    return error
+    return error;
+  }
+};
+
+export const searchapi = async (data) => {
+  try {
+    return await instance.get(`/${data}/search`);
+  } catch (error) {
+    return error;
+  }
+};
+export const fetchAllUsers = async () => {
+  try {
+    return await instance.get("/findallUsers");
+  } catch (error) {
+    return error;
+  }
+};
+
+export const followuser = async (id) => {
+  try {
+    return await instance.put(`/followUser/${id}`);
+  } catch (error) {
+    return error;
+  }
+};
+
+export const findFollowingApi = async () => {
+  try {
+    return await instance.get("/getfollowing");
+  } catch (error) {
+    return undefined;
+  }
+};
+
+export const findFollowedApi = async () => {
+  try {
+    return await instance.get("/getfollowed");
+  } catch (error) {
+    return undefined;
+  }
+};
+
+export async function fetchSuggestedUsersApi() {
+  try {
+    return await instance.get("/getSuggestedUsers");
+  } catch (error) {
+    return undefined;
   }
 }

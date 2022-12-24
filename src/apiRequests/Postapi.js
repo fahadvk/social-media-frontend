@@ -64,3 +64,18 @@ export const DeletePost = async (id) => {
     return error
   }
  }
+ export const savePostApi =async(id) =>{
+  try {
+    return await instance.patch(`/savepost/${id}`)
+  } catch (error) {
+    return undefined
+  }
+}
+
+export const fetchsavedPosts = async ()=>{
+  try {
+    return await instance.get('/getsavedPosts')
+  } catch (error) {
+    return undefined
+  }
+}

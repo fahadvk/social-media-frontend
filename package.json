@@ -36,6 +36,8 @@
     "react-image-crop": "^10.0.7",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.4.3",
+    "socket.io-client": "^4.5.4",
+    "timeago.js": "^4.0.2",
     "universal-cookie": "^4.0.4",
     "yup": "^0.32.11"
   },

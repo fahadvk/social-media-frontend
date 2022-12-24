@@ -7,6 +7,9 @@ import PublicRoutes from "./PublicRoutes";
 import Login from "../components/Login/Login";
 import ProfilePage from "../Pages/ProfilePage";
 import SettingsPage from "../Pages/SettingsPage";
+import PeoplePage from "../Pages/PeoplePage";
+import SavedPostPage from "../Pages/SavedPostPage";
+import ChatPage from "../Pages/ChatPage";
 
 function Routing() {
   return (
@@ -26,7 +29,6 @@ function Routing() {
           path="/login"
           element={
             <PublicRoutes>
-             
               <Login />
             </PublicRoutes>
           }
@@ -53,6 +55,31 @@ function Routing() {
           element={
             <PrivateRoutes>
               <SettingsPage />
+            </PrivateRoutes>
+          }
+        />
+        <Route
+          path="/people"
+          element={
+            <PrivateRoutes>
+              <PeoplePage />
+            </PrivateRoutes>
+          }
+        />
+
+        <Route
+          path="/savedPosts"
+          element={
+            <PrivateRoutes>
+              <SavedPostPage />
+            </PrivateRoutes>
+          }
+        />
+        <Route
+          path="/messages"
+          element={
+            <PrivateRoutes>
+              <ChatPage/>
             </PrivateRoutes>
           }
         />
