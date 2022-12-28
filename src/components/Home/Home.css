@@ -1,0 +1,38 @@
+.Home {
+  padding: 0;
+  position: relative;
+  /* background-color: #EEF0F4; */
+  /* display: grid; */
+  /* display: flex; */
+  /* background-color: black; */
+
+  /* justify-content: center; */
+  /* grid-template-columns: 18rem auto 20rem; */
+  /* gap: 1rem; */
+  /* overflow-x: hidden; */
+  overflow: hidden; 
+  width: 100%;
+  height: max-content;
+}
+.nav {
+  width: 100%;
+  background-color: rgb(18, 17, 17);
+  min-height: 3rem
+}
+.RightSideBar {
+  width: 20%;
+  
+  margin-top: 0;
+}
+
+.Posts {
+  width: 40%;
+
+  height: 70%;
+  margin-top: 3rem;
+}
+.LeftSideNav {
+ overflow: hidden;
+  width: 20%;
+
+ } 

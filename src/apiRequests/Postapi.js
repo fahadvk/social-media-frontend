@@ -57,25 +57,25 @@ export const DeletePost = async (id) => {
     return error;
   }
 };
- export const HidePost = async (id) =>{
+export const HidePost = async (id) => {
   try {
-    return await instance.patch(`/hidePost/${id}`)
+    return await instance.patch(`/hidePost/${id}`);
   } catch (error) {
-    return error
+    return error;
   }
- }
- export const savePostApi =async(id) =>{
+};
+export const savePostApi = async (id) => {
   try {
-    return await instance.patch(`/savepost/${id}`)
+    return await instance.patch(`/savepost/${id}`);
   } catch (error) {
-    return undefined
+    return undefined;
   }
-}
+};
 
-export const fetchsavedPosts = async ()=>{
+export const fetchsavedPosts = async () => {
   try {
-    return await instance.get('/getsavedPosts')
+    return await instance.get("/getsavedPosts");
   } catch (error) {
-    return undefined
+    return undefined;
   }
-}
+};

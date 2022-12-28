@@ -19,7 +19,7 @@ function Home() {
           </div>
         )}
         {/* <Feed /> */}
-        <div className="Posts  w-10/12 mr-9 lg:w-1/2 overflow-hidden">
+        <div className="Posts sm:w-full  w-10/12 mr-9 lg:w-1/2 overflow-hidden">
           <Posts />
         </div>
         <div className="LeftSideNav mr-12 invisible  lg:visible ">

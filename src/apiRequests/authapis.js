@@ -1,7 +1,7 @@
 /* eslint-disable linebreak-style */
 import axios from "axios";
 
-const instance = axios.create({
+export  const instance = axios.create({
   withCredentials: true,
   baseURL: "http://localhost:4000/",
   timeout: 3000,
