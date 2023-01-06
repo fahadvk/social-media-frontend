@@ -1,6 +1,6 @@
 import { instance } from "./authapis";
 
-export const getUserChats = async (id) => {
+export const getUserChats = async () => {
   try {
     return await instance.get(`/chat/`);
   } catch (error) {
@@ -14,4 +14,19 @@ export const getMessages = async (id) => {
     return undefined;
   }
 };
-// export const
+
+export const sendMessage = async (data) => {
+  try {
+    return await instance.post("/messages", data);
+  } catch (error) {
+    return undefined;
+  }
+};
+
+export const createChatRoom = async (data) => {
+  try {
+    return await instance.post("/chat/create", data);
+  } catch (error) {
+    return undefined
+  }
+};

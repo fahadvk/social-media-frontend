@@ -15,25 +15,36 @@ export default function Peoples() {
   const searchRef = useRef("");
   const search = async () => {
     const { data } = await searchapi(searchRef.current.value);
-    if (data) setUsers(data);
+    if (data) {
+      setUsers(null);
+      setTimeout(() => setUsers(data), 100);
+    }
   };
   const fetchUserlist = async () => {
     const { data } = await fetchAllUsers();
-    if (data) setUsers(data);
+    if (data) {
+      setUsers(null);
+      setTimeout(() => setUsers(data), 100);
+    }
   };
 
   const findFollwingUsers = async () => {
     const { data } = await findFollowingApi();
-    if (data) setUsers(data[0]?.following);
+    if (data) {
+      setUsers(null);
+      setTimeout(() => setUsers(data[0]?.following, 100));
+    }
   };
   async function findFollowedUsers() {
     const { data } = await findFollowedApi();
-    if (data) setUsers(data[0]?.followers);
+    if (data) {
+      setUsers(null);
+      setTimeout(() => setUsers(data[0]?.followers), 100);
+    }
   }
 
   useEffect(() => {
     fetchUserlist();
-   
   }, []);
   return (
     <div className="mt-8 ml-8 lg:ml-16 ">

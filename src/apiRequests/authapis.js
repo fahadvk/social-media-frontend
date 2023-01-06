@@ -1,9 +1,10 @@
 /* eslint-disable linebreak-style */
 import axios from "axios";
+import { MainServerUrl } from "../Constants/defaults";
 
 export  const instance = axios.create({
   withCredentials: true,
-  baseURL: "http://localhost:4000/",
+  baseURL: MainServerUrl,
   timeout: 3000,
 });
 

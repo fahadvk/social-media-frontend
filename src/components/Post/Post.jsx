@@ -13,18 +13,26 @@ import {
 } from "@cloudinary/react";
 import { format } from "timeago.js";
 import { useNavigate } from "react-router-dom";
+import { RWebShare } from "react-web-share";
 import { useSelector } from "react-redux";
+
 import {
   addLike,
   DeletePost,
   HidePost,
+  ReportPost,
   savePostApi,
 } from "../../apiRequests/Postapi";
 import Comments from "../Comments/Comments";
+import { Host } from "../../Constants/defaults";
+import Confirm from "../../Shared/Confirmbox/Confirm";
 
 export default function PostCard({ post, fetchAll }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
   const [commentOpen, setCommntOpen] = useState(false);
+  const [isSaved, setSaved] = useState(post?.isSaved);
+  const [commentCount, setCommentCount] = useState(post.comments.length);
   const navigate = useNavigate();
   const { userId } = useSelector((state) => state.authReducer);
   const isUserPost = post?.userid?._id === userId;
@@ -46,24 +54,41 @@ export default function PostCard({ post, fetchAll }) {
     if (res.data) await fetchAll();
   };
   const savePost = async () => {
-    const res = await savePostApi(post._id);
-    if (res) {
+    const { data } = await savePostApi(post._id);
+    if (data) {
       // eslint-disable-next-line no-param-reassign
-      post.isSaved = !post.isSaved;
+      setSaved(!isSaved);
     }
   };
+  async function Report() {
+    const { data } = await ReportPost(post._id);
+    if (data) await fetchAll();
+  }
+  const reportPost = () => {
+    Confirm({
+      title: "Confirm to report",
+      message: "Are you sure to Report this Post",
+      next: Report,
+    });
+  };
+  function incrementcount() {
+    setCommentCount(commentCount + 1);
+  }
+
   return (
     <Card sx={{ margin: "0" }}>
       <div className="flex gap-3">
         <div>
           <button
             type="button"
-            onClick={() => navigate(`/profile/${post?.userid._id}`)}
+            onClick={() =>
+              navigate(`/profile`, { state: { userId: post?.userid._id } })
+            }
           >
             <span className="cursor-pointer">
               <Avatar
                 name={post?.userid.name}
-                src={post?.userid?.profileimage}
+                src={post?.userid?.profileImage}
               />
             </span>
           </button>
@@ -103,51 +128,73 @@ export default function PostCard({ post, fetchAll }) {
           <div className="relative">
             {dropdownOpen && (
               <div className="absolute -right-6 bg-white shadow-md shadow-gray-300 p-3 rounded-sm border border-gray-100 w-52">
-                <button
-                  type="button"
-                  onClick={savePost}
-                  className="flex gap-3 py-2 my-2 hover:bg-socialBlue hover:text-dark -mx-4 px-4 rounded-md transition-all hover:scale-110 hover:shadow-md shadow-gray-300"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill={post.isSaved ? "black" : "none"}
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-6 h-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"
-                    />
-                  </svg>
-                  Save post
-                </button>
-              
                 {!isUserPost && (
-                  <button
-                    type="button"
-                    onClick={hidePost}
-                    href="/"
-                    className="flex gap-3 py-2 my-2 hover:bg-socialBlue hover:text-dark -mx-4 px-4 rounded-md transition-all hover:scale-110 hover:shadow-md shadow-gray-300"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-6 h-6"
+                  <>
+                    <button
+                      type="button"
+                      onClick={savePost}
+                      className="flex gap-3 py-2 my-2 hover:bg-socialBlue hover:text-dark -mx-4 px-4 rounded-md transition-all hover:scale-110 hover:shadow-md shadow-gray-300"
                     >
-                      <path
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill={isSaved ? "black" : "none"}
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-6 h-6"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"
+                        />
+                      </svg>
+                      Save post
+                    </button>
+                    <button
+                      type="button"
+                      onClick={hidePost}
+                      href="/"
+                      className="flex gap-3 py-2 my-2 hover:bg-socialBlue hover:text-dark -mx-4 px-4 rounded-md transition-all hover:scale-110 hover:shadow-md shadow-gray-300"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-6 h-6"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                      Hide post
+                    </button>
+                    <button
+                      className="flex gap-3 py-2 my-2 hover:bg-socialBlue hover:text-dark -mx-4 px-4 rounded-md transition-all hover:scale-110 hover:shadow-md shadow-gray-300"
+                      onClick={reportPost}
+                      type="button"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-6 h-6 icon icon-tabler icon-tabler-alert-triangle"
+                        viewBox="0 0 24 24"
+                        strokeWidth="1.5"
+                        stroke="#000000"
+                        fill="none"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
-                    Hide post
-                  </button>
+                      >
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M12 9v2m0 4v.01" />
+                        <path d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75" />
+                      </svg>
+                      Report Post
+                    </button>
+                  </>
                 )}
                 {isUserPost && (
                   <button
@@ -230,27 +277,37 @@ export default function PostCard({ post, fetchAll }) {
               d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 011.037-.443 48.282 48.282 0 005.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"
             />
           </svg>
-          {post?.comments.length}
+          {commentCount}
         </button>
-        <button type="button" className="flex gap-2 items-center">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-7 h-7"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z"
-            />
-          </svg>
-        </button>
+        <RWebShare
+          data={{
+            url: `${Host}/post/${post._id}`,
+          }}
+          onClick={() => console.info("share successful!")}
+        >
+          <button type="button" className="flex gap-2 items-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-7 h-7"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z"
+              />
+            </svg>
+          </button>
+        </RWebShare>
       </div>
       <div className="overflow-hidden">
-        {commentOpen && <Comments postid={post?._id} />}
+        {commentOpen && (
+          // eslint-disable-next-line react/jsx-no-bind
+          <Comments incrementcount={incrementcount} postid={post?._id} />
+        )}
       </div>
     </Card>
   );

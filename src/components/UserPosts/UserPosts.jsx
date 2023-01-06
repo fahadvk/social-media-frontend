@@ -3,14 +3,15 @@ import { useEffect, useState } from "react";
 import { Cloudinary } from "@cloudinary/url-gen";
 import { Text } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
 import { fetchUserPosts } from "../../apiRequests/Postapi";
 import Post from "../Post/Post";
+import {CloudName as cloudName} from '../../Constants/defaults'
 
-function UserPosts() {
+
+// eslint-disable-next-line react/prop-types
+function UserPosts({id}) {
   const [Posts, setPosts] = useState([]);
   const { userId } = useSelector((state) => state.authReducer);
-  const { id } = useParams();
   const isLoggedUser = id === userId;
   const fetchPosts = async () => {
     const res = await fetchUserPosts(id);
@@ -19,11 +20,10 @@ function UserPosts() {
   useEffect(() => {
     fetchPosts();
   }, []);
-  const myCld = new Cloudinary({ cloud: { cloudName: "dmfse4ydr" } });
+  const myCld = new Cloudinary({ cloud: { cloudName} });
   return Posts?.length === 0 ? (
     // eslint-disable-next-line react/no-unescaped-entities
     <Text className="text-center">
-      {" "}
       {isLoggedUser ? "You don't added any Post" : "No Posts"}
     </Text>
   ) : (

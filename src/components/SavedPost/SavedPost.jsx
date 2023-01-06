@@ -2,11 +2,12 @@ import { Box } from "@mantine/core";
 import { useState, useEffect } from "react";
 import { Cloudinary } from "@cloudinary/url-gen";
 import { fetchsavedPosts } from "../../apiRequests/Postapi";
+import {CloudName as cloudName} from '../../Constants/defaults'
 import PostCard from "../Post/Post";
 
 export default function () {
   const [saved, setSaved] = useState([]);
-  const myCld = new Cloudinary({ cloud: { cloudName: "dmfse4ydr" } });
+  const myCld = new Cloudinary({ cloud: { cloudName } });
   const fetchdata = async () => {
     const { data } = await fetchsavedPosts();
     const posts = data.map((val) => {

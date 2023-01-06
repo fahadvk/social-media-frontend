@@ -11,7 +11,7 @@ import {
 } from "../../apiRequests/Postapi";
 import Comment from "../Comment/Comment";
 
-function Comments({ postid }) {
+function Comments({ postid, incrementcount }) {
   const commentRef = useRef("");
   const [allComments, setComments] = useState([]);
 
@@ -25,15 +25,16 @@ function Comments({ postid }) {
     socket.on("comment", (data) => {
       if (data.action === "create") {
         setComments(data.post);
-       
       }
     });
+    console.log("comment");
   }, []);
   const createComment = async () => {
     const content = commentRef.current.value;
     const response = await create({ postid, content });
-    if (response.data)  commentRef.current.value = ""
+    if (response.data) commentRef.current.value = "";
     // await fetchcomments();
+    incrementcount();
   };
   return (
     <>

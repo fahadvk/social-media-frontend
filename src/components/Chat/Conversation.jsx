@@ -1,23 +1,88 @@
-import { useState, useEffect } from "react";
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable react/prop-types */
+import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
+import openSocket from "socket.io-client";
 import { format } from "timeago.js";
 import InputEmoji from "react-input-emoji";
-import { getMessages } from "../../apiRequests/ChatApis";
+
+import { getMessages, sendMessage } from "../../apiRequests/ChatApis";
 
 export default function Chat({ chat, currentUser }) {
   const [messages, setMessages] = useState([]);
   const [newMessage, SetNewMessage] = useState("");
-  const { id } = useSelector((state) => state.authReducer);
-  const handleOnEnter = () => {
-    console.log(newMessage, "op");
+  const [onlineUsers, setOnlineUsers] = useState([]);
+  const { userId } = useSelector((state) => state.authReducer);
+  const SocketRef = useRef();
+  const [SendMessage, setSendMessage] = useState(null);
+  const [recievedmsg, setrecievedmsg] = useState("");
+  const [isOnline, setOnline] = useState();
+  const scroll = useRef();
+  const handleOnEnter = async () => {
+    // eslint-disable-next-line no-underscore-dangle
+    const { data } = await sendMessage({
+      chatId: chat?._id,
+      text: newMessage,
+      senderId: userId,
+    });
+    setMessages([...messages, data]);
+    const recieverId = chat?.Users?._id;
+    setSendMessage({ data, recieverId });
+    if (scroll.current) scroll?.current.scrollIntoView({ behavior: "smooth" });
+    SetNewMessage("");
   };
+
+  function checkOnline() {
+    const member = chat?.Users?._id;
+    const online = onlineUsers.find((user) => user.userId === member);
+    return online;
+  }
   useEffect(() => {
-    const fethMessages = async (id) => {
-      const { data } = await getMessages(id);
+    try {
+      SocketRef.current = openSocket("http://localhost:4000");
+      SocketRef.current.on("connect", () => {
+        console.log("connected");
+        SocketRef.current.emit("new-user-add", userId);
+        SocketRef.current.on("get-users", (users) => {
+          console.log(users, "___________________");
+          setOnlineUsers([users]);
+        });
+      });
+      SocketRef.current.on("get-users", (activeUsers) =>
+        console.log(activeUsers, "dkkdkk")
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }, [currentUser]);
+  useEffect(() => {
+    const fethMessages = async (chatid) => {
+      const { data } = await getMessages(chatid);
       if (data) setMessages(data);
     };
     if (chat !== null) fethMessages(chat?._id);
   }, [chat]);
+
+  useEffect(() => {
+    if (SendMessage !== null) {
+      SocketRef.current.emit("send-message", SendMessage);
+    }
+  }, [SendMessage]);
+
+  useEffect(() => {
+    setOnline(checkOnline());
+    SocketRef.current.on("recieve-message", ({ data }) => {
+      console.log(data, "recieved");
+      setrecievedmsg(data);
+    });
+    if (scroll.current) scroll?.current.scrollIntoView({ behavior: "smooth" });
+  }, []);
+  useEffect(() => {
+    if (recievedmsg !== null) {
+      setMessages([...messages, recievedmsg]);
+    }
+    if (scroll.current) scroll?.current.scrollIntoView({ behavior: "smooth" });
+  }, [recievedmsg]);
   return (
     <div>
       <div className="h-screen  flex antialiased text-gray-200 bg-gray-900 mt-6 overflow-hidden">
@@ -30,13 +95,17 @@ export default function Chat({ chat, currentUser }) {
                     <div className="w-12 h-12 mr-4 relative flex flex-shrink-0">
                       <img
                         className="shadow-md rounded-full w-full h-full object-cover"
-                        src="https://randomuser.me/api/portraits/women/33.jpg"
+                        src={
+                          chat?.Users.profileImage ||
+                          "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png"
+                        }
+                        // src="https://randomuser.me/api/portraits/women/33.jpg"
                         alt=""
                       />
                     </div>
                     <div className="text-sm">
                       <p className="font-bold">{chat?.Users.name}</p>
-                      <p>Active 1h ago</p>
+                      <p>{isOnline ? "online" : "offline"}</p>
                     </div>
                   </div>
                 </div>
@@ -45,21 +114,23 @@ export default function Chat({ chat, currentUser }) {
                   {messages.map((message) => {
                     return (
                       <div
+                        ref={scroll}
                         className={
-                          id === message?.sender
+                          userId === message?.sender
                             ? "flex flex-row justify-end mt-5"
                             : "flex flex-row justify-start"
                         }
                       >
-                        <div className="w-8 h-8 relative flex flex-shrink-0 mr-4">
+                        {/* <div className="w-8 h-8 relative flex flex-shrink-0 mr-4">
                           <img
                             className="shadow-md rounded-full w-full h-full object-cover"
-                            src="https://randomuser.me/api/portraits/women/33.jpg"
+                            // src="https://randomuser.me/api/portraits/women/33.jpg"
+                            src={message}
                             alt=""
                           />
-                        </div>
-                        <div className="messages text-sm text-gray-700 grid grid-flow-row gap-2">
-                          <div className="flex items-center group">
+                        </div> */}
+                        <div className="messages text-sm mt-2 bg-white-light p-3 rounded-2xl  text-gray-700 grid grid-flow-row gap-2">
+                          <div className="flex items-center group ">
                             <p className="px-6 py-3 rounded-t-full rounded-r-full bg-gray-800 max-w-xs lg:max-w-md text-gray-200">
                               {message.text}
                             </p>
@@ -71,27 +142,10 @@ export default function Chat({ chat, currentUser }) {
                       </div>
                     );
                   })}
-                  {/* send */}
-                  {/* <div className="flex flex-row justify-end mt-5">
-                  <div className="w-8 h-8 relative flex flex-shrink-0 mr-4">
-                    <img
-                      className="shadow-md rounded-full w-full h-full object-cover"
-                      src="https://randomuser.me/api/portraits/women/33.jpg"
-                      alt=""
-                    />
-                  </div>
-                  <div className="messages text-sm text-gray-700 grid grid-flow-row gap-2">
-                    <div className="flex items-center group">
-                      <p className="px-6 py-3 rounded-t-full rounded-r-full bg-gray-800 max-w-xs lg:max-w-md text-gray-200">
-                        Hey! How are you?
-                      </p>
-                    </div>
-                  </div>
-                </div> */}
                 </div>
                 <div className="chat-footer flex-none">
                   <div className="flex flex-row items-center p-4">
-                    <button
+                    {/* <button
                       type="button"
                       className="flex flex-shrink-0 focus:outline-none mx-2 block text-blue-600 hover:text-blue-700 w-6 h-6"
                     >
@@ -134,26 +188,8 @@ export default function Chat({ chat, currentUser }) {
                       >
                         <path d="M9,18 L9,16.9379599 C5.05368842,16.4447356 2,13.0713165 2,9 L4,9 L4,9.00181488 C4,12.3172241 6.6862915,15 10,15 C13.3069658,15 16,12.314521 16,9.00181488 L16,9 L18,9 C18,13.0790094 14.9395595,16.4450043 11,16.9378859 L11,18 L14,18 L14,20 L6,20 L6,18 L9,18 L9,18 Z M6,4.00650452 C6,1.79377317 7.79535615,0 10,0 C12.209139,0 14,1.79394555 14,4.00650452 L14,8.99349548 C14,11.2062268 12.2046438,13 10,13 C7.790861,13 6,11.2060545 6,8.99349548 L6,4.00650452 L6,4.00650452 Z" />
                       </svg>
-                    </button>
+                    </button> */}
                     <div className="relative flex-grow w-full">
-                      {/* <label>
-                      <input
-                        className="rounded-full py-2 pl-3 pr-10 w-full border border-gray-800 focus:border-gray-700 bg-gray-800 focus:bg-gray-900 focus:outline-none text-gray-200 focus:shadow-md transition duration-300 ease-in"
-                        type="text"
-                        placeholder="Aa"
-                      />
-                      <button
-                        type="button"
-                        className="absolute top-0 right-0 mt-2 mr-3 flex flex-shrink-0 focus:outline-none block text-blue-600 hover:text-blue-700 w-6 h-6"
-                      >
-                        <svg
-                          viewBox="0 0 20 20"
-                          className="w-full h-full fill-current"
-                        >
-                          <path d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM6.5 9a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm7 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm2.16 3a6 6 0 0 1-11.32 0h11.32z" />
-                        </svg>
-                      {/* </button> */}
-                      {/* </label>  */}
                       <InputEmoji
                         onEnter={handleOnEnter}
                         cleanOnEnter
@@ -162,17 +198,17 @@ export default function Chat({ chat, currentUser }) {
                       />
                     </div>
                     <button
-                    type="button"
-                    className="flex outline bg-blue flex-shrink-0 focus:outline-none mx-2  text-blue-600 hover:text-blue-700 py-1 p-2 rounded-lg"
-                  >
-                    Send
-                  </button>
+                      onClick={handleOnEnter}
+                      type="button"
+                      className="flex outline bg-blue flex-shrink-0 focus:outline-none mx-2  text-white hover:text-blue-700 py-1 p-2 rounded-lg"
+                    >
+                      Send
+                    </button>
                   </div>
                 </div>
               </section>
             ) : (
               <span className="text-lg font-medium ml-auto mr-auto">
-                {" "}
                 Tap on a Chat to Start a Conversation
               </span>
             )}

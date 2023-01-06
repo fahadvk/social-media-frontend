@@ -1,6 +1,7 @@
 import axios from "axios";
+import { PostServerUrl } from "../Constants/defaults";
 
-const postapi = "http://localhost:4001";
+const postapi = PostServerUrl;
 const instance = axios.create({
   withCredentials: true,
   baseURL: postapi,
@@ -75,6 +76,22 @@ export const savePostApi = async (id) => {
 export const fetchsavedPosts = async () => {
   try {
     return await instance.get("/getsavedPosts");
+  } catch (error) {
+    return undefined;
+  }
+};
+
+export const fetchPostById = async (id) => {
+  try {
+    return await instance.get(`/${id}`);
+  } catch (e) {
+    return undefined;
+  }
+};
+
+export const ReportPost = async (id) => {
+  try {
+    return await instance.patch(`/reportPost/${id}`);
   } catch (error) {
     return undefined;
   }

@@ -1,23 +1,22 @@
+import "./App.css";
+import { Provider } from "react-redux";
 
-import './App.css'
-import { Provider } from 'react-redux'
-import { CookiesProvider } from "react-cookie";
 import { ChakraProvider } from "@chakra-ui/react";
-import Routing from './Routes/Routers'
-import Store from './store/index'
+import Routing from "./Routes/Routers";
+import Store from "./Store/Index";
+import Loader from "./Shared/Loader/Loader";
 
 function App() {
-
-
   return (
     <Provider store={Store}>
       <ChakraProvider>
-        <CookiesProvider>
-            <Routing />
-        </CookiesProvider>
+       
+          <Loader />
+          <Routing />
+      
       </ChakraProvider>
     </Provider>
-  )
+  );
 }
 
-export default App
+export default App;

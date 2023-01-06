@@ -4,6 +4,7 @@ import { useRef, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Card, Avatar } from "@chakra-ui/react";
 import { createPost } from "../../apiRequests/Postapi";
+import {CloudName,uploadPreset} from '../../Constants/defaults'
 
 export default function PostFormCard({fetchPosts}) {
   const [image, setImage] = useState("");
@@ -14,12 +15,13 @@ export default function PostFormCard({fetchPosts}) {
   const openWidget = () => {
     widgetRef.current.open();
   };
+  
   useEffect(() => {
     CloudinaryRef.current = window.cloudinary;
-    widgetRef.current = CloudinaryRef.current.createUploadWidget(
+    widgetRef.current = CloudinaryRef.current?.createUploadWidget(
       {
-        cloudName: "dmfse4ydr",
-        uploadPreset: "ftvgzdez",
+        cloudName:CloudName,
+        uploadPreset,
         multiple: false, // restrict upload to a single file
         clientAllowedFormats: ["images", "png", "webp", "jpeg"], // restrict uploading to image files only
 
@@ -75,7 +77,7 @@ export default function PostFormCard({fetchPosts}) {
             <button
               type="button"
               onClick={submitPost}
-              className="  text-dark bg-blue px-6 py-1 rounded-md"
+              className="  text-white bg-blue px-6 py-1 rounded-md"
             >
               Share
             </button>

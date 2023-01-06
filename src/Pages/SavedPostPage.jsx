@@ -1,13 +1,13 @@
 import { Flex } from "@mantine/core";
 import SavedPost from "../components/SavedPost/SavedPost";
-import NavigationCard from "../components/Common/RightSideBar/RightSideBar";
-import LeftSidebar from "../components/Common/LeftSideBar/LeftSideBar";
+import SideBarContainer from "../Shared/RightSideBar/SideBarContainer";
+import LeftSidebar from "../Shared/LeftSideBar/LeftSideBar";
 
-export default function () {
+export default function  () {
   return (
     <Flex justifyContent="space-between" gap="0" marginTop="0">
-      <div className=" RightSideBar invisible  lg:visible">
-        <NavigationCard />
+      <div className=" RightSideBar ">
+        <SideBarContainer />
       </div>
       <div className="justify-self-center ml-14 w-1/2 ">
         <SavedPost />

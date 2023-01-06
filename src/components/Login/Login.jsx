@@ -3,19 +3,21 @@
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
-import { useCookies } from "react-cookie";
 import { useToast } from "@chakra-ui/react";
 import { Input } from "@mantine/core";
 import { useDispatch } from "react-redux";
-import { setAuth, setName,setUserId } from "../../store/authSlice";
+import { setAuth, setName, setUserId } from "../../Store/AuthSlice";
+import { changeLoad } from "../../Store/LoaderSlice";
 import { loginapi } from "../../apiRequests/authapis";
+import { AdminLogin } from "../../apiRequests/AdminApis";
 
-function Login() {
+// eslint-disable-next-line react/prop-types
+function Login({ admin }) {
+  console.log(admin);
   const [show] = useState(false);
   const Navigate = useNavigate();
   const dispatch = useDispatch();
   const [, setError] = useState(false);
-  const [, setCookie] = useCookies("token");
   const toast = useToast();
   const emailRef = useRef("");
   // const handleClick = () => setShow(!show);
@@ -26,20 +28,34 @@ function Login() {
     const password = passwordRef.current.value;
     if (email === "" || password === "") {
       setError(true);
+      toast({
+        status: "error",
+        title: "validation error",
+        description: "please enter valid details",
+      });
     } else {
+      dispatch(changeLoad(true));
+      if (admin) {
+        await AdminLogin({
+          UserName: emailRef.current.value,
+          Password: passwordRef.current.value,
+        });
+        dispatch(changeLoad(false));
+        return;
+      }
+
       const response = await loginapi({
         email: emailRef.current.value,
         password: passwordRef.current.value,
       });
-
+      dispatch(changeLoad(false));
       if (response.data?.name) {
-        setCookie("token", response.data.token, { path: "/" });
         const cookie = new Cookies();
-        cookie.set("token", response.data.token, { httpOnly: true });
+        cookie.set("token", response.data.token);
         dispatch(setName(response.data.name));
         dispatch(setAuth(true));
         // eslint-disable-next-line no-underscore-dangle
-        dispatch(setUserId(response.data?._id))
+        dispatch(setUserId(response.data?._id));
         Navigate("/");
       } else if (response.response.data.failed) {
         toast({
@@ -61,7 +77,6 @@ function Login() {
       <div className="max-w-[400px] w-full mx-auto bg-white  p-8 px-8 rounded-lg">
         <form onSubmit={handleSubmit}>
           <h2 className=" text-blue dark:text-white font-bold text-center text-3xl ">
-    
             Signin
           </h2>
           <div className="flex flex-col text-gray-400 py-2 mt-3">
@@ -93,7 +108,10 @@ function Login() {
             {/* </div> */}
           </div>
 
-          <button type="submit" className="w-full my-3 py-3 bg-blue rounded-xl">
+          <button
+            type="submit"
+            className="w-full my-3 py-3 bg-blue text-white rounded-xl"
+          >
             Signin
           </button>
         </form>

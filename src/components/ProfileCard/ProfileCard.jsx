@@ -3,24 +3,27 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable prettier/prettier */
 import React, { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
 import "./ProfileCard.css";
 import { useToast } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { CloudName as cloudName, uploadPreset } from "../../Constants/defaults";
+
 import {
   fetchUserDetails,
+  followuser,
   updateCoverImage,
   updateProfile,
 } from "../../apiRequests/authapis";
 
-function ProfileCard({ Details }) {
-  const { id } = useParams();
+function ProfileCard({ Details, id }) {
+  console.log(id);
   const { userId } = useSelector((state) => state.authReducer);
   const toast = useToast();
   const CoverImageRef = useRef("");
   const [coverURl, SetCoverUrl] = useState("");
   const [details, SetDetails] = useState({});
+  const [userFollowed, setFollowed] = useState();
   const isLogginedUser = id === userId;
   const CloudinaryRef = useRef();
   const widgetRef = useRef();
@@ -29,32 +32,43 @@ function ProfileCard({ Details }) {
   };
   const fetchDetails = async () => {
     const res = await fetchUserDetails(id);
-    if (res.data) SetDetails(res.data);
-  };
-  CloudinaryRef.current = window.cloudinary;
-  widgetRef.current = CloudinaryRef.current.createUploadWidget(
-    {
-      cloudName: "dmfse4ydr",
-      uploadPreset: "ftvgzdez",
-      cropping: true,
-      sources: ["local", "camera"],
-      folder: "user_Profile",
-      multiple: false, // restrict upload to a single file
-      clientAllowedFormats: ["images", "png", "webp", "jpeg"], // restrict uploading to image files only
-    },
-    async (err, result) => {
-      if (!err && result && result.event === "success") {
-        await updateProfile(result.info.secure_url);
-        fetchDetails();
-        toast({
-          title: "profileupdated",
-          status: "success",
-          isClosable: true,
-        });
+    if (res.data) {
+      SetDetails(res.data);
+      console.log(res.data.followers, userFollowed, "dslk");
+      if (res.data.followers?.includes(userId)) {
+        console.log("object");
+        setFollowed(true);
       }
     }
-  );
-  Details && SetDetails(Details);
+  };
+
+  useEffect(() => {
+    CloudinaryRef.current = window.cloudinary;
+    widgetRef.current = CloudinaryRef.current.createUploadWidget(
+      {
+        cloudName,
+        uploadPreset,
+        cropping: true,
+        sources: ["local", "camera"],
+        folder: "user_Profile",
+        multiple: false, // restrict upload to a single file
+        clientAllowedFormats: ["images", "png", "webp", "jpeg"], // restrict uploading to image files only
+      },
+      async (err, result) => {
+        if (!err && result && result.event === "success") {
+          await updateProfile(result.info.secure_url);
+          fetchDetails();
+          toast({
+            title: "profileupdated",
+            status: "success",
+            isClosable: true,
+          });
+        }
+      }
+    );
+  }, []);
+  // setFollowed(Details?.followers.includes(userId));
+
   !Details &&
     useEffect(() => {
       fetchDetails();
@@ -78,7 +92,8 @@ function ProfileCard({ Details }) {
         />
 
         <img
-        className="max-h-28"y
+          className="max-h-28"
+          y
           alt=""
           src={
             details.profileImage
@@ -92,15 +107,18 @@ function ProfileCard({ Details }) {
           name="cover"
           accept="image/png,image/jpeg,image/webp"
           onChange={async (e) => {
-            const file = e.target.files[0]
-           
+            const file = e.target.files[0];
+
             SetCoverUrl(URL.createObjectURL(file));
-            const form = new FormData()
-            form.append("file",file)
-            form.append("upload_preset","ftvgzdez")
-            form.append("folder","coverImages")
+            const form = new FormData();
+            form.append("file", file);
+            form.append("upload_preset", uploadPreset);
+            form.append("folder", "coverImages");
             axios
-              .post("https://api.cloudinary.com/v1_1/dmfse4ydr/image/upload", form)
+              .post(
+                `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+                form
+              )
               .then(async (res) => {
                 const response = await updateCoverImage(res.data.secure_url);
                 if (response.data)
@@ -132,6 +150,21 @@ function ProfileCard({ Details }) {
           <div className="follow">
             <span>{details?.followers?.length}</span>
             <span>Followers</span>
+          </div>
+          <div>
+            {!isLogginedUser && (
+              <button
+                type="button"
+                onClick={async () => {
+                  // eslint-disable-next-line no-underscore-dangle
+                  await followuser(details?._id);
+                  setFollowed(!userFollowed);
+                }}
+                className="bg-blue p-1 rounded-md text-white"
+              >
+                {userFollowed ? "unfollow" : "follow"}
+              </button>
+            )}
           </div>
         </div>
 

@@ -1,15 +1,13 @@
-import { Flex, useMediaQuery } from "@chakra-ui/react";
-import LeftSidebar from "../components/Common/LeftSideBar/LeftSideBar";
-import NavigationCard from "../components/Common/RightSideBar/RightSideBar";
+import { Flex } from "@chakra-ui/react";
+import SideBarContainer from "../Shared/RightSideBar/SideBarContainer";
+import LeftSidebar from "../Shared/LeftSideBar/LeftSideBar";
 import Settings from "../components/Settings/Settings";
 
 function SettingsPage() {
-  const [isMobile] = useMediaQuery("(min-width: 1196px)");
-
   return (
     <Flex justifyContent="space-between" gap="0" marginTop="0">
-      <div className=" RightSideBar invisible  lg:visible">
-        {isMobile && <NavigationCard />}
+      <div className=" RightSideBar   ">
+        <SideBarContainer />
       </div>
       <div className="justify-self-center ml-20 w-full  lg:h-2/3">
         <Settings />

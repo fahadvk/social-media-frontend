@@ -10,6 +10,9 @@ import SettingsPage from "../Pages/SettingsPage";
 import PeoplePage from "../Pages/PeoplePage";
 import SavedPostPage from "../Pages/SavedPostPage";
 import ChatPage from "../Pages/ChatPage";
+import SinglePost from "../Pages/SinglePost";
+import AdminLogin from "../Pages/AdminLogin";
+import AdminHome from "../Pages/AdminHome";
 
 function Routing() {
   return (
@@ -43,7 +46,7 @@ function Routing() {
         />
 
         <Route
-          path="/profile/:id"
+          path="/profile"
           element={
             <PrivateRoutes>
               <ProfilePage />
@@ -79,10 +82,20 @@ function Routing() {
           path="/messages"
           element={
             <PrivateRoutes>
-              <ChatPage/>
+              <ChatPage />
             </PrivateRoutes>
           }
         />
+        <Route
+          path="/post/:postid"
+          element={
+            <PrivateRoutes>
+              <SinglePost />
+            </PrivateRoutes>
+          }
+        />
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin/home" element={<AdminHome />} />
       </Routes>
     </Router>
   );

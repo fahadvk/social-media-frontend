@@ -9,8 +9,8 @@ const PostsSlice = createSlice({
     userId: "",
   },
   reducers: {
-    setzPosts: (state, actions) => {
-      state.userName = actions.payload;
+    setPosts: (state, actions) => {
+      state.Posts = actions.payload;
     },
     setLikeCount: (state, actions) => {
       state.auth = actions.payload;
