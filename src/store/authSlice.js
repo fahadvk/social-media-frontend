@@ -5,6 +5,7 @@ const AuthSlice = createSlice({
   name: "auth",
   initialState: {
     auth: false,
+    admin:false,
     userName: "",
     userId:''
   },
@@ -17,8 +18,11 @@ const AuthSlice = createSlice({
     },
     setUserId:(state,actions) =>{
       state.userId = actions.payload
+    },
+    setAdminAuth:(state,actions)=>{
+      state.admin = actions.payload
     }
   },
 });
-export const { setName, setAuth,setUserId } = AuthSlice.actions;
+export const { setName, setAuth,setUserId,setAdminAuth } = AuthSlice.actions;
 export default AuthSlice;

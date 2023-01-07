@@ -47,10 +47,7 @@ export default function Users() {
     <div className="flex h-screen flex-row w-full bg-white">
       <div className="flex w-1/4 flex-col border-l border-r-2 overflow-y-auto">
         <div className=" py-4 px-3">
-     
-      
-
-        <Autocomplete
+           <Autocomplete
           value={search}
           onChange={searchHandler}
           data={searchResult}

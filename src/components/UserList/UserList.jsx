@@ -1,12 +1,13 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/prop-types */
-import { Table, Pagination } from "@mantine/core";
+import {  Pagination } from "@mantine/core";
 import { useEffect, useState } from "react";
 
 import { BlockUser, getUserDetails } from "../../apiRequests/AdminApis";
+import Table from "../Table/Table";
 
-export default function UserList({ selected }) {
+export default function UserList() {
   const [Users, setUsers] = useState([]);
   const [activePage, setPage] = useState(1);
   const [totalPages, setTotal] = useState();
@@ -32,7 +33,6 @@ export default function UserList({ selected }) {
       setTotal(Math.ceil(data.TotalUsers / 5));
     }
   }
-  // const totalPages = totalUsers.?length / 3;
   useEffect(() => {
     GetUsers(activePage);
   }, []);
@@ -60,18 +60,7 @@ export default function UserList({ selected }) {
   ));
   return (
     <div className="mt-16 w-3/5 h-full ">
-      <Table w="lg">
-        <thead>
-          <tr>
-            <th>index</th>
-            <th>User Name</th>
-            <th> Mobile</th>
-            <th>Email</th>
-            <th>Block/UnBlock</th>
-          </tr>
-        </thead>
-        <tbody>{rows}</tbody>
-      </Table>
+        <Table headings={['index','User Name','Mobile','Email','Block/UnBlock']} rows={rows}/>
       <div className="flex justify-center mt-10">
         <Pagination
           page={activePage}

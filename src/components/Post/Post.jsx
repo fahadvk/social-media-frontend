@@ -53,6 +53,21 @@ export default function PostCard({ post, fetchAll }) {
     const res = await HidePost(post._id);
     if (res.data) await fetchAll();
   };
+  const hidePostConfirm = () => {
+    Confirm({
+      title: "Confirm to hide",
+      message: "Are you sure to hide this Post",
+      next: hidePost,
+    });
+  };
+
+  const DeletePostConfirm = () => {
+    Confirm({
+      title: "Confirm to Delete",
+      message: "Are You Sure do you want to delete this Post",
+      next: deletePost,
+    });
+  };
   const savePost = async () => {
     const { data } = await savePostApi(post._id);
     if (data) {
@@ -153,7 +168,7 @@ export default function PostCard({ post, fetchAll }) {
                     </button>
                     <button
                       type="button"
-                      onClick={hidePost}
+                      onClick={hidePostConfirm}
                       href="/"
                       className="flex gap-3 py-2 my-2 hover:bg-socialBlue hover:text-dark -mx-4 px-4 rounded-md transition-all hover:scale-110 hover:shadow-md shadow-gray-300"
                     >
@@ -199,7 +214,7 @@ export default function PostCard({ post, fetchAll }) {
                 {isUserPost && (
                   <button
                     type="button"
-                    onClick={deletePost}
+                    onClick={DeletePostConfirm}
                     className="flex gap-3 py-2 my-2 hover:bg-socialBlue hover:text-dark -mx-4 px-4 rounded-md transition-all hover:scale-110 hover:shadow-md shadow-gray-300"
                   >
                     <svg

@@ -6,7 +6,7 @@ export default function SingleChat({ chat, setCurrentChat }) {
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     <div
       onClick={() => setCurrentChat(chat)}
-      className="flex flex-row py-4 px-2 justify-center items-center border-b-2"
+      className="flex flex-row py-4 px-2  items-center border-b-2"
     >
       <div className="w-1/4">
         <img

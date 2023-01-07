@@ -13,6 +13,8 @@ import ChatPage from "../Pages/ChatPage";
 import SinglePost from "../Pages/SinglePost";
 import AdminLogin from "../Pages/AdminLogin";
 import AdminHome from "../Pages/AdminHome";
+import AdminRoute from "./AdminProtectedRote";
+import Error from "../Pages/Error";
 
 function Routing() {
   return (
@@ -95,7 +97,15 @@ function Routing() {
           }
         />
         <Route path="/admin/login" element={<AdminLogin />} />
-        <Route path="/admin/home" element={<AdminHome />} />
+        <Route
+          path="/admin/home"
+          element={
+            <AdminRoute>
+              <AdminHome />
+            </AdminRoute>
+          }
+        />
+        <Route path="*" element={<Error />} />
       </Routes>
     </Router>
   );

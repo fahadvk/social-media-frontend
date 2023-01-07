@@ -24,7 +24,9 @@
     "rules": {
         "react/react-in-jsx-scope": "off",
         "prettier/prettier": "off",
-        "no-unused-expressions":"off"
+        "no-unused-expressions":"off",
+        "no-underscore-dangle":"off"
+
         
         
     }

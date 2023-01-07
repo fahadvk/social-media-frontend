@@ -1,5 +1,6 @@
 import { Host } from "../Constants/defaults";
 import { instance } from "./authapis";
+import postApi from "./Postapi";
 
 export const AdminLogin = async (body) => {
   try {
@@ -8,7 +9,7 @@ export const AdminLogin = async (body) => {
       window.location.href = `${Host}/admin/home`;
     }
   } catch (error) {
-    return error;
+    console.log(error);
   }
 };
 
@@ -36,9 +37,9 @@ export const BlockUser = async (userId) => {
   }
 };
 
-export const fetchReported = async () => {
+export const DeletePost = async (postid) => {
   try {
-    return await instance.get("/admin/reportedPosts");
+    return await postApi.delete(`/admin/deletePost/${postid}`);
   } catch (error) {
     return undefined;
   }

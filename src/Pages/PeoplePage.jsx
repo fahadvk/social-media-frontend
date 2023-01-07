@@ -5,7 +5,12 @@ import Peoples from "../components/Peoples/Peoples";
 
 export default function PeoplePage() {
   return (
-    <Flex justifyContent="space-between" gap="0" marginTop="0">
+    <Flex
+      justifyContent="space-between"
+      className="w-screen"
+      gap="0"
+      marginTop="0"
+    >
       <div className=" RightSideBar">
         <SideBarContainer />
       </div>

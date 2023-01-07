@@ -68,7 +68,7 @@ export default function AdminSideBar({ setSelected }) {
         </div>
         <div
           onClick={() => {
-            cookie.remove("admintoken");
+            cookie.set("Admintoken", "");
             navigate("/admin/login");
           }}
           className="flex  mb-2 justify-start items-center gap-4 pl-5  hover:bg-blue p-2 rounded-md group cursor-pointer hover:shadow-lg m-auto"

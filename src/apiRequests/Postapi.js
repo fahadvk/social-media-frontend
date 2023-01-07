@@ -2,7 +2,7 @@ import axios from "axios";
 import { PostServerUrl } from "../Constants/defaults";
 
 const postapi = PostServerUrl;
-const instance = axios.create({
+ const instance = axios.create({
   withCredentials: true,
   baseURL: postapi,
   timeout: 3000,
@@ -96,3 +96,13 @@ export const ReportPost = async (id) => {
     return undefined;
   }
 };
+
+export const fetchReported = async () => {
+  try {
+    return await instance.get("/admin/ReportedPosts");
+  } catch (error) {
+    return undefined;
+  }
+};
+
+export default instance

@@ -1,6 +1,6 @@
 import { Cloudinary } from "@cloudinary/url-gen";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { fetchPostById } from "../apiRequests/Postapi";
 import PostCard from "../components/Post/Post";
 import { CloudName as cloudName } from "../Constants/defaults";
@@ -8,21 +8,25 @@ import { CloudName as cloudName } from "../Constants/defaults";
 export default function SinglePost() {
   const { postid } = useParams();
   const [post, setPost] = useState();
+  const navigate = useNavigate();
   const myCld = new Cloudinary({ cloud: { cloudName } });
 
   const fetchPost = async () => {
     console.log(postid);
-    const { data } = await fetchPostById(postid);
-    console.log(data);
-    if (data) {
-      const publicid = data[0].image?.split("/")[7]?.split(".")[0];
-      const img = myCld.image(publicid);
-      data[0].img = img;
-      // eslint-disable-next-line no-underscore-dangle
-      //   data.userid._id = id;
-
-      console.log(data.img);
-      setPost(data[0]);
+    try {
+      const { data } = await fetchPostById(postid);
+      if (data) {
+        const publicid = data[0].image?.split("/")[7]?.split(".")[0];
+        const img = myCld.image(publicid);
+        data[0].img = img;
+        // eslint-disable-next-line no-underscore-dangle
+        setPost(data[0]);
+      } else {
+        console.log("else");
+        navigate("/dklk");
+      }
+    } catch {
+      navigate("/dklk");
     }
   };
   useEffect(() => {

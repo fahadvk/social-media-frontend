@@ -51,7 +51,7 @@ function Login({ admin }) {
       dispatch(changeLoad(false));
       if (response.data?.name) {
         const cookie = new Cookies();
-        cookie.set("token", response.data.token);
+        cookie.set("token", response.data.token, { maxAge: 60 * 60 * 24 });
         dispatch(setName(response.data.name));
         dispatch(setAuth(true));
         // eslint-disable-next-line no-underscore-dangle
