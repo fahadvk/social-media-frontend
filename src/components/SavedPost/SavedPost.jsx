@@ -11,7 +11,6 @@ export default function () {
   const fetchdata = async () => {
     const { data } = await fetchsavedPosts();
     const posts = data.map((val) => {
-      //   val.userId = val.userid;
       // eslint-disable-next-line no-param-reassign
       val.posts.userid = val.userid;
       return val.posts;

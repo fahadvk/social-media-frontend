@@ -2,10 +2,9 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable prettier/prettier */
 import React from "react";
-// import { useSelector } from "react-redux";
+
 import {
   MdOutlineSpaceDashboard,
-  // MdOutlineMoreHoriz,
   MdOutlineSettings,
   MdOutlineLogout,
 } from "react-icons/md";

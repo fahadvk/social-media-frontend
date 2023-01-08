@@ -4,7 +4,7 @@ import { Box, Text } from "@mantine/core";
 import { Avatar, useMediaQuery } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import "./LeftSideBar.css";
-import { fetchSuggestedUsersApi, followuser } from "../../apiRequests/authapis";
+import { fetchSuggestedUsersApi, followuser } from "../../apiRequests/Authapis";
 import { setSuggestedUsers } from "../../Store/UsersSlice";
 
 function LeftSidebar() {
@@ -21,7 +21,7 @@ function LeftSidebar() {
     await followuser(id);
     fetchSuggestedUsers();
   };
-  // alert(isHide);
+
   useEffect(() => {
     if (!suggested || suggested.length < 3) fetchSuggestedUsers();
   }, []);
@@ -53,7 +53,6 @@ function LeftSidebar() {
                   {user.name}
                 </Text>
                 <button
-                  // eslint-disable-next-line no-underscore-dangle
                   onClick={() => followUser(user._id)}
                   type="button"
                   className="bg-blue w-1/4  text-white mt-2 h-8 xl:p-1 rounded-lg"

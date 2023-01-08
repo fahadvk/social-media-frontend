@@ -9,6 +9,7 @@ import {
   createComment as create,
   fecthCommentbypost,
 } from "../../apiRequests/Postapi";
+import { PostServerUrl } from "../../Constants/defaults";
 import Comment from "../Comment/Comment";
 
 function Comments({ postid, incrementcount }) {
@@ -21,13 +22,12 @@ function Comments({ postid, incrementcount }) {
   };
   useEffect(() => {
     fetchcomments();
-    const socket = openSocket("http://localhost:4001");
+    const socket = openSocket(PostServerUrl);
     socket.on("comment", (data) => {
       if (data.action === "create") {
         setComments(data.post);
       }
     });
-    console.log("comment");
   }, []);
   const createComment = async () => {
     const content = commentRef.current.value;

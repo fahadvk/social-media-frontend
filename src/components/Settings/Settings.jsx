@@ -24,7 +24,7 @@ import {
   setNewPassword,
   updateUserInfo,
   verifyPassword,
-} from "../../apiRequests/authapis";
+} from "../../apiRequests/Authapis";
 
 export default function Settings() {
   const [Userinfo, setUserinfo] = useState();
@@ -93,8 +93,7 @@ export default function Settings() {
     }
   };
   const validationSchema = Yup.object({
-    mobile: Yup.number()
-      .min(10, "Must be  minimum 10 characters "),
+    mobile: Yup.number().min(10, "Must be  minimum 10 characters "),
     email: Yup.string().email("please provide a  valid email address"),
   });
   const initialValues = {
@@ -114,7 +113,8 @@ export default function Settings() {
       // eslint-disable-next-line no-restricted-globals
       if (isNaN(body.mobile)) body.mobile = undefined;
       Object.keys(body).forEach(
-        (key) => body[key] === undefined && delete body[key]);
+        (key) => body[key] === undefined && delete body[key]
+      );
       setUserinfo(body);
     },
   });

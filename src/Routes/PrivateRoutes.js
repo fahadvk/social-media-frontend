@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Cookies from "universal-cookie";
-import { verifyuser } from "../apiRequests/authapis";
+import { verifyuser } from "../apiRequests/Authapis";
 import { setAuth, setName, setUserId } from "../Store/AuthSlice";
 import { changeLoad } from "../Store/LoaderSlice";
 

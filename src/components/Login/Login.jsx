@@ -8,12 +8,10 @@ import { Input } from "@mantine/core";
 import { useDispatch } from "react-redux";
 import { setAuth, setName, setUserId } from "../../Store/AuthSlice";
 import { changeLoad } from "../../Store/LoaderSlice";
-import { loginapi } from "../../apiRequests/authapis";
-import { AdminLogin } from "../../apiRequests/AdminApis";
+import { loginapi } from "../../apiRequests/Authapis";
 
 // eslint-disable-next-line react/prop-types
-function Login({ admin }) {
-  console.log(admin);
+function Login() {
   const [show] = useState(false);
   const Navigate = useNavigate();
   const dispatch = useDispatch();
@@ -34,15 +32,7 @@ function Login({ admin }) {
         description: "please enter valid details",
       });
     } else {
-      dispatch(changeLoad(true));
-      if (admin) {
-        await AdminLogin({
-          UserName: emailRef.current.value,
-          Password: passwordRef.current.value,
-        });
-        dispatch(changeLoad(false));
-        return;
-      }
+
 
       const response = await loginapi({
         email: emailRef.current.value,
@@ -102,10 +92,6 @@ function Login({ admin }) {
               type={show ? "text" : "password"}
               placeholder="Enter password"
             />
-
-            {/* <button className="absolute" onClick={handleClick}>
-                            {show ? 'Hide' : 'Show'}</button> */}
-            {/* </div> */}
           </div>
 
           <button
@@ -118,7 +104,6 @@ function Login({ admin }) {
         <button type="button" className="text-gray-400 py-2 text-center ">
           forgot password
         </button>
-        {/* <div className='flex justify-between text-gray-400 py-2'> */}
         <button
           className="w-full text-center text-gray-400 py-2"
           onClick={() => {
@@ -128,7 +113,7 @@ function Login({ admin }) {
         >
           Don't have an account ? Register
         </button>
-        {/* </div> */}
+ 
       </div>
     </div>
   );

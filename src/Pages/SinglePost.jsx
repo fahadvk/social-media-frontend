@@ -12,7 +12,6 @@ export default function SinglePost() {
   const myCld = new Cloudinary({ cloud: { cloudName } });
 
   const fetchPost = async () => {
-    console.log(postid);
     try {
       const { data } = await fetchPostById(postid);
       if (data) {

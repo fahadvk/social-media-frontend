@@ -2,9 +2,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { Input } from "@mantine/core";
-import { registerapi } from "../../apiRequests/authapis";
-
-
+import { registerapi } from "../../apiRequests/Authapis";
 
 function Signup() {
   const Navigate = useNavigate();
@@ -43,7 +41,6 @@ function Signup() {
         return Navigate("/login");
       }
       if (response.data.name) {
-        
         return Navigate("/");
       }
       return undefined;
@@ -57,7 +54,8 @@ function Signup() {
         <h2 className="text-blue text-center text-3xl font-bold ">Register</h2>
         <form onSubmit={formik.handleSubmit}>
           <div className="flex flex-col text-gray-400  mt-3">
-            <Input size="md"
+            <Input
+              size="md"
               className="rounded-lg underline-offset-8   focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
               type="text"
               placeholder="FullName"
@@ -72,8 +70,8 @@ function Signup() {
             </label>
           </div>
           <div className="flex flex-col text-gray-400  mt-3">
-            <Input size="md"
-           
+            <Input
+              size="md"
               type="email"
               placeholder="youremail@gmail.com"
               id="email"
@@ -90,7 +88,8 @@ function Signup() {
             </label>
           </div>
           <div className="flex flex-col text-gray-400  mt-3">
-            <Input size="md"
+            <Input
+              size="md"
               type="tel"
               placeholder="Mobile"
               id="mobile"
@@ -107,7 +106,8 @@ function Signup() {
             </label>
           </div>
           <div className="flex flex-col text-gray-400  mt-3">
-            <Input size="md"
+            <Input
+              size="md"
               type="Password"
               placeholder="Enter your Password"
               id="password"
@@ -125,7 +125,8 @@ function Signup() {
           </div>
 
           <div className="flex flex-col text-gray-400  mt-3">
-            <Input size="md"
+            <Input
+              size="md"
               type="Password"
               placeholder="Repeat your Password "
               id="confirmpassword"

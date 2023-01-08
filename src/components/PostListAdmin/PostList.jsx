@@ -14,7 +14,6 @@ export default function PostList() {
   useEffect(() => {
     async function fetchReportedPosts() {
       const { data } = await fetchReported();
-      console.log(data, "data");
       if (data) setPosts(data);
     }
     fetchReportedPosts();

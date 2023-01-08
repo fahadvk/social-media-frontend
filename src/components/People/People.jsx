@@ -3,13 +3,13 @@
 /* eslint-disable react/prop-types */
 import { Card, Image, Text, Button } from "@mantine/core";
 import { useState } from "react";
-import { followuser } from "../../apiRequests/authapis";
+import { followuser } from "../../apiRequests/Authapis";
 
 export default function People({ user }) {
-   const [userInfo,setUserInfo]  = useState(user)
-   const followUser = async (id) => {
-  const {data} =   await followuser(id);
-  if(data) setUserInfo({...userInfo,isFollowed:!userInfo.isFollowed})
+  const [userInfo, setUserInfo] = useState(user);
+  const followUser = async (id) => {
+    const { data } = await followuser(id);
+    if (data) setUserInfo({ ...userInfo, isFollowed: !userInfo.isFollowed });
   };
   return (
     <Card

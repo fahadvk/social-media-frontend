@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Autocomplete } from "@mantine/core";
 import { useState, useEffect } from "react";
-import { searchapi } from "../../apiRequests/authapis";
+import { searchapi } from "../../apiRequests/Authapis";
 import { createChatRoom, getUserChats } from "../../apiRequests/ChatApis";
 import SingleChat from "../Chat/Chat";
 import Chat from "../Chat/Conversation";
@@ -22,13 +22,11 @@ export default function Users() {
     setSearch(e);
     setTimeout(async () => {
       const { data } = await searchapi(search);
-      console.log(data);
       if (data) {
         const names = [];
         data.forEach((res) => {
           // eslint-disable-next-line no-underscore-dangle
           names.push({ value: res.name, id: res._id });
-          console.log(res.name);
         });
         setResult(names);
       }
@@ -47,14 +45,14 @@ export default function Users() {
     <div className="flex h-screen flex-row w-full bg-white">
       <div className="flex w-1/4 flex-col border-l border-r-2 overflow-y-auto">
         <div className=" py-4 px-3">
-           <Autocomplete
-          value={search}
-          onChange={searchHandler}
-          data={searchResult}
-          onItemSubmit={submitItem}
-          placeholder="search People"
-        />
-          </div>
+          <Autocomplete
+            value={search}
+            onChange={searchHandler}
+            data={searchResult}
+            onItemSubmit={submitItem}
+            placeholder="search People"
+          />
+        </div>
         <h3 className="text-center font-semibold">Recent Chats</h3>
         {chats.map((chat) => {
           return <SingleChat setCurrentChat={setCurrentChat} chat={chat} />;

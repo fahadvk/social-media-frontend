@@ -14,7 +14,6 @@ export default function UserList() {
 
   const blockuser = async (id) => {
     const { data } = await BlockUser(id);
-    console.log(data);
 
     const newArray = Users.map((user) => {
       if (user._id === data._id) {
@@ -28,8 +27,7 @@ export default function UserList() {
     const { data } = await getUserDetails(page);
     if (data) {
       setUsers(data.Users);
-      const total = data.TotalUsers;
-      console.log(Math.ceil(total), total);
+
       setTotal(Math.ceil(data.TotalUsers / 5));
     }
   }

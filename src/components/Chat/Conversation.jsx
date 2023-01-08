@@ -7,6 +7,7 @@ import { format } from "timeago.js";
 import InputEmoji from "react-input-emoji";
 
 import { getMessages, sendMessage } from "../../apiRequests/ChatApis";
+import { MainServerUrl } from "../../Constants/defaults";
 
 export default function Chat({ chat, currentUser }) {
   const [messages, setMessages] = useState([]);
@@ -40,23 +41,24 @@ export default function Chat({ chat, currentUser }) {
   }
   useEffect(() => {
     try {
-      SocketRef.current = openSocket("http://localhost:4000");
+      SocketRef.current = openSocket(MainServerUrl);
       SocketRef.current.on("connect", () => {
         console.log("connected");
         SocketRef.current.emit("new-user-add", userId);
         SocketRef.current.on("get-users", (users) => {
-          console.log(users, "___________________");
           setOnlineUsers([users]);
         });
       });
       SocketRef.current.on("get-users", (activeUsers) =>
-        console.log(activeUsers, "dkkdkk")
+        // console.log(activeUsers, "dkkdkk")
+        setOnlineUsers(activeUsers)
       );
     } catch (error) {
       console.log(error);
     }
   }, [currentUser]);
   useEffect(() => {
+    setOnline(checkOnline());
     const fethMessages = async (chatid) => {
       const { data } = await getMessages(chatid);
       if (data) setMessages(data);
@@ -73,7 +75,6 @@ export default function Chat({ chat, currentUser }) {
   useEffect(() => {
     setOnline(checkOnline());
     SocketRef.current.on("recieve-message", ({ data }) => {
-      console.log(data, "recieved");
       setrecievedmsg(data);
     });
     if (scroll.current) scroll?.current.scrollIntoView({ behavior: "smooth" });
@@ -100,7 +101,6 @@ export default function Chat({ chat, currentUser }) {
                           chat?.Users.profileImage ||
                           "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png"
                         }
-                        // src="https://randomuser.me/api/portraits/women/33.jpg"
                         alt=""
                       />
                     </div>
@@ -122,14 +122,6 @@ export default function Chat({ chat, currentUser }) {
                             : "flex flex-row justify-start"
                         }
                       >
-                        {/* <div className="w-8 h-8 relative flex flex-shrink-0 mr-4">
-                          <img
-                            className="shadow-md rounded-full w-full h-full object-cover"
-                            // src="https://randomuser.me/api/portraits/women/33.jpg"
-                            src={message}
-                            alt=""
-                          />
-                        </div> */}
                         <div className="messages text-sm mt-2 bg-white-light p-3 rounded-2xl  text-gray-700 grid grid-flow-row gap-2">
                           <div className="flex items-center group ">
                             <p className="px-6 py-3 rounded-t-full rounded-r-full bg-gray-800 max-w-xs lg:max-w-md text-gray-200">

@@ -1,4 +1,4 @@
-import { instance } from "./authapis";
+import { instance } from "./Authapis";
 
 export const getUserChats = async () => {
   try {
@@ -27,6 +27,6 @@ export const createChatRoom = async (data) => {
   try {
     return await instance.post("/chat/create", data);
   } catch (error) {
-    return undefined
+    return undefined;
   }
 };

@@ -1,5 +1,4 @@
 /* eslint-disable react/jsx-no-bind */
-/* eslint-disable no-underscore-dangle */
 import { Tabs } from "@mantine/core";
 import { useState, useEffect, useRef } from "react";
 import {
@@ -7,7 +6,7 @@ import {
   findFollowedApi,
   findFollowingApi,
   searchapi,
-} from "../../apiRequests/authapis";
+} from "../../apiRequests/Authapis";
 import People from "../People/People";
 
 export default function Peoples() {

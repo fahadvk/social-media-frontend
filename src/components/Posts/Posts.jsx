@@ -14,7 +14,6 @@ function Posts() {
 
   const fetchAllposts = async () => {
     const { data } = await fetchAll();
-    console.log(data, "PPosts");
     setPosts(data);
   };
   useEffect(() => {

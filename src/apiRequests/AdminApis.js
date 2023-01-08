@@ -1,5 +1,5 @@
 import { Host } from "../Constants/defaults";
-import { instance } from "./authapis";
+import { instance } from "./Authapis";
 import postApi from "./Postapi";
 
 export const AdminLogin = async (body) => {

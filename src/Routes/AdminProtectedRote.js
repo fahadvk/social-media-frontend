@@ -23,7 +23,6 @@ function AdminRoute({ children }) {
       }
       // return cookie.remove("Admintoken");
     } catch (error) {
-      console.log("object");
       cookie.remove("Admintoken");
       // Navigate("/admin/login");
       // window.location.href = "/admin/login";

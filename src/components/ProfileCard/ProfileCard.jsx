@@ -14,10 +14,9 @@ import {
   followuser,
   updateCoverImage,
   updateProfile,
-} from "../../apiRequests/authapis";
+} from "../../apiRequests/Authapis";
 
 function ProfileCard({ Details, id }) {
-  console.log(id);
   const { userId } = useSelector((state) => state.authReducer);
   const toast = useToast();
   const CoverImageRef = useRef("");
