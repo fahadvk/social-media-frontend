@@ -32,8 +32,6 @@ function Login() {
         description: "please enter valid details",
       });
     } else {
-
-
       const response = await loginapi({
         email: emailRef.current.value,
         password: passwordRef.current.value,
@@ -113,7 +111,6 @@ function Login() {
         >
           Don't have an account ? Register
         </button>
- 
       </div>
     </div>
   );
