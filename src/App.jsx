@@ -7,13 +7,12 @@ import Store from "./Store/Index";
 import Loader from "./Shared/Loader/Loader";
 
 function App() {
+
   return (
     <Provider store={Store}>
       <ChakraProvider>
-       
-          <Loader />
-          <Routing />
-      
+        <Loader />
+        <Routing />
       </ChakraProvider>
     </Provider>
   );
