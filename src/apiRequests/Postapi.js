@@ -1,11 +1,18 @@
 import axios from "axios";
+import Cookie from "universal-cookie";
+
 import { PostServerUrl } from "../Constants/defaults";
 
+
+const cookie = new Cookie();
+const token = cookie.get("token");
 const postapi = PostServerUrl;
  const instance = axios.create({
   withCredentials: true,
   baseURL: postapi,
   timeout: 3000,
+  headers: { token },
+
 });
 export const createPost = async (data) => {
   try {

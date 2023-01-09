@@ -1,11 +1,15 @@
 /* eslint-disable linebreak-style */
+import Cookie from "universal-cookie";
 import axios from "axios";
 import { MainServerUrl } from "../Constants/defaults";
 
-export  const instance = axios.create({
+const cookie = new Cookie();
+const token = cookie.get("token");
+export const instance = axios.create({
   withCredentials: true,
   baseURL: MainServerUrl,
   timeout: 3000,
+  headers: { token },
 });
 
 export const registerapi = async (body) => {
