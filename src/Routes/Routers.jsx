@@ -96,7 +96,7 @@ function Routing() {
             </PrivateRoutes>
           }
         />
-        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin" element={<AdminLogin />} />
         <Route
           path="/admin/home"
           element={
