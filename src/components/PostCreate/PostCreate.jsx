@@ -53,7 +53,7 @@ export default function PostFormCard({fetchPosts}) {
     <Card>
       <div className="flex gap-2">
         <div>
-          <Avatar src="" className="blue" backgroundColor='#0D4C92' name={userName}/>
+          <Avatar src='' className="blue" backgroundColor='#0D4C92' name={userName}/>
         </div>
         <input
           ref={captionRef}
