@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [react()],
   root: './public',
   build: {
-    outDir: './public',
+    outDir: '../dist',
   },
   // server: {
   //   middleware: [

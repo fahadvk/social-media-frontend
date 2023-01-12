@@ -1,5 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  HashRouter,
+  BrowserRouter as Router,
+  Route,
+  Routes,
+} from "react-router-dom";
 import SignUpPage from "../Pages/SignupPage";
 import HomePage from "../Pages/HomePage";
 import PrivateRoutes from "./PrivateRoutes";
@@ -18,7 +23,8 @@ import Error from "../Pages/Error";
 
 function Routing() {
   return (
-    <Router>
+    // <Router>
+    <HashRouter>
       <Routes>
         <Route
           path="/"
@@ -107,7 +113,8 @@ function Routing() {
         />
         <Route path="*" element={<Error />} />
       </Routes>
-    </Router>
+      {/* </Router> */}
+    </HashRouter>
   );
 }
 
