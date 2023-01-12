@@ -6,6 +6,9 @@ import history from 'connect-history-api-fallback';
 export default defineConfig({
   plugins: [react()],
   root: './public',
+  build: {
+    outDir: './public',
+  },
   // server: {
   //   middleware: [
   //     history({
