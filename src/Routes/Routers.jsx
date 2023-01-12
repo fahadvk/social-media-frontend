@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  HashRouter,
+  // HashRouter,
   BrowserRouter as Router,
   Route,
   Routes,
@@ -23,8 +23,7 @@ import Error from "../Pages/Error";
 
 function Routing() {
   return (
-    // <Router>
-    <HashRouter>
+    <Router>
       <Routes>
         <Route
           path="/"
@@ -113,8 +112,7 @@ function Routing() {
         />
         <Route path="*" element={<Error />} />
       </Routes>
-      {/* </Router> */}
-    </HashRouter>
+    </Router>
   );
 }
 
